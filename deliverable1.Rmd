@@ -1,0 +1,11 @@
+---
+title: "Deliverable 1"
+author: "Brandon Leff"
+output:
+  html_document:
+    df_print: paged
+  html_notebook:
+    df_print: paged
+---
+
+
