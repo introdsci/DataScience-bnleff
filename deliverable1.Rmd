@@ -8,6 +8,7 @@ output:
 
 ```{r, echo=FALSE}
 library(tidyverse)
+library(forcats)
 ```
 
 ## Introduction 
@@ -17,7 +18,7 @@ In order to understand why I am diving into this topic, I need to explain the mo
 ## Data Set
 
 ```{r}
-apps <- read_csv("/Users/brandonleff/Desktop/math385/portfolio/DataScience-bnleff/data/AppleStore.csv")
+apps <- read_csv("data/AppleStore.csv")
 ```
 
 The data set I will be using is `AppleStore.csv` which is a comma separated values data set about app store statistics. There are 11,100 observations of 17 variables. Every row is a specific app and there are 17 columns describing certain aspects of each app. Out of the 17 variables, there are 12 variables that are doubles and 5 that are characters. I will cover the variables deeper later.
@@ -72,12 +73,37 @@ There are 17 variables in this data set.
 
 ## Data Cleaning and Preparing Tidy Data
 
-First I want to convert certain character variables to factors for easier analysis.
+```{r}
+apps2 <- apps %>% 
+  filter(!is.na(track_name))
+```
 
 ```{r}
-# for all rows where apps$track_name = NA, delete the row
-# only 7197 rows but the data set has 11100 so what are the rest?
-# convert apps$cont_rating to a factor
-# create tibbles named: basic_info & ratings, with id as the linking variable
+apps2$cont_rating <- factor(apps2$cont_rating, levels = c("12+", "17+", "4+", "9+"))
 ```
+
+```{r}
+basic_info <- tibble(app_id = apps2$id, 
+                     app_name = apps2$track_name, 
+                     size_bytes = apps2$size_bytes, 
+                     currency_type = apps2$currency,
+                     app_price = apps2$price,
+                     app_version = apps2$ver,
+                     age_rating = apps2$cont_rating,
+                     app_genre = apps2$prime_genre,
+                     devices_supported = apps2$sup_devices.num,
+                     number_screenshots = apps2$ipadSc_urls.num,
+                     languages_supported = apps2$lang.num,
+                     vpp_lic = apps2$vpp_lic)
+```
+
+```{r}
+ratings <- tibble(app_id = apps2$id,
+                  rating_count_tot = apps2$rating_count_tot,
+                  rating_count_ver = apps2$rating_count_ver,
+                  avg_rating_tot = apps2$user_rating,
+                  avg_rating_ver = apps2$user_rating_ver)
+```
+
+
 
