@@ -4,8 +4,80 @@ author: "Brandon Leff"
 output:
   html_document:
     df_print: paged
-  html_notebook:
-    df_print: paged
 ---
 
+```{r, echo=FALSE}
+library(tidyverse)
+```
+
+## Introduction 
+
+In order to understand why I am diving into this topic, I need to explain the motivation behind it. Growing up, video games have been a big aspect of not only my life, but society in general. Lately there has been a change in the climate of gaming from single player relaxing games to the creation of competitve online gaming and eSports as we know it today. A very influential aspect of this change is the introduction of microtransactions and virtual currency. I want to study into mobile games specifically to see the effect of microtransactions on things such as average ratings, game sales, and other mobile game statistics.
+
+## Data Set
+
+```{r}
+apps <- read_csv("/Users/brandonleff/Desktop/math385/portfolio/DataScience-bnleff/data/AppleStore.csv")
+```
+
+The data set I will be using is `AppleStore.csv` which is a comma separated values data set about app store statistics. There are 11,100 observations of 17 variables. Every row is a specific app and there are 17 columns describing certain aspects of each app. Out of the 17 variables, there are 12 variables that are doubles and 5 that are characters. I will cover the variables deeper later.
+
+## Data Set Source
+
+The source I got my data from was a Kaggle posting. The following github account is the creator.
+
+https://github.com/ramamet/applestoreR)
+
+The data was scraped using Linux and R web scraping tools from the iTunes Search API.
+
+The strongsuits of this data set is that it comes from Apple themselves from their Apple Inc website using scraping tools to where there is less people who have potentially touched the data set. The potential shortcoming of the data set is that it was from July 2017 meaning that there could be updates of data in the current day that differ from the data set.
+
+## Variables
+
+There are 17 variables in this data set. 
+
+`id` is the app ID which is a number uniquely assigned to the app.
+
+`track_name` is the app name.
+
+`size_bytes` is the size of the app in bytes.
+
+`currency` is the type of currency for the price of the app.
+
+`price` is the price of the app.
+
+`rating_count_tot` is the user rating counts for all versions of the app.
+
+`rating_count_ver` is the user rating counts for the current version of the app.
+
+`user_rating` is the average user rating value for all versions of the app.
+
+`user_rating_ver` is the average user rating value for the current version of the app.
+
+`ver` is the latest version code.
+
+`cont_rating` is the content rating of the app.
+
+`prime_genre` is the primary genre of the app.
+
+`sup_devices.num` is the number of supporting devices for the app.
+
+`ipadSc_urls.num` is the number of screenshots shown for display in the app store.
+
+`lang.num` is the number of supported languages for the app.
+
+`vpp_lic` is if the Vpp Device Based Licensing is enabled.
+
+`game_enab` is not explained in the data set and is a column of 0's so we will delete this variable.
+
+## Data Cleaning and Preparing Tidy Data
+
+First I want to convert certain character variables to factors for easier analysis.
+
+```{r}
+# for all rows where apps$track_name = NA, delete the row
+# only 7197 rows but the data set has 11100 so what are the rest?
+# convert apps$cont_rating to a factor
+# create tibbles named: basic_info & ratings, with id as the linking variable
+```
 
