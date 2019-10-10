@@ -73,13 +73,20 @@ There are 17 variables in this data set.
 
 ## Data Cleaning and Preparing Tidy Data
 
+In order to clean this data set I had to do deep research into the data set. I first realized that there were 11100 observations, but in the Kaggle data set description, I saw that there were 7197 observations. When looking at the data set, I realized that there were `NA` values for `track_name` which is the app name. I want to delete the rows where the `track_name` is `NA` and store that into a new data frame called `apps2`.
+
 ```{r}
 apps2 <- apps %>% 
   filter(!is.na(track_name))
+nrow(apps2)
 ```
 
+After deleting the rows with `NA` values for `track_name` we now have the correct number of observations for the data set.
+
+The next step in the data cleaning process is to change certain variables from character data to factors. Factors are a way to categorize character data into...
 ```{r}
 apps2$cont_rating <- factor(apps2$cont_rating, levels = c("12+", "17+", "4+", "9+"))
+apps2$cont_rating <- apps2$cont_rating %>% fct_relevel("4+","9+","12+","17+")
 ```
 
 ```{r}
