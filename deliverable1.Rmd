@@ -9,6 +9,8 @@ output:
 ```{r, echo=FALSE}
 library(tidyverse)
 library(forcats)
+library(ggplot2)
+library(sjPlot)
 ```
 
 ## Introduction 
