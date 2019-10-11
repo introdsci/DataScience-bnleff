@@ -83,13 +83,40 @@ apps2 <- apps %>%
 nrow(apps2)
 ```
 
-After deleting the rows with `NA` values for `track_name` we now have the correct number of observations for the data set.
+After deleting the rows with `NA` values for `track_name` we now have the correct number of observations (7197) for the data set.
 
-The next step in the data cleaning process is to change certain variables from character data to factors. Factors are a way to categorize character data into...
+The next step in the data cleaning process is to change certain variables from character data to factors. Factors are a statistical data type used to store categorical data. I am specifically changing `cont_rating`, which is the content rating with units of age, to a factor with the levels of 4+, 9+, 12+, and 17+. 
+
 ```{r}
 apps2$cont_rating <- factor(apps2$cont_rating, levels = c("12+", "17+", "4+", "9+"))
 apps2$cont_rating <- apps2$cont_rating %>% fct_relevel("4+","9+","12+","17+")
 ```
+
+After making those changes to the `apps2` data frame, I now want to break up the data frame into smaller tibbles specifically defined for different aspects of the project. `basic_info` is a data frame including the apps' identification and basic information that doesn't involve people's ratings on the app. In this process, I am taking previous variables from the `apps2` data frame and renaming them into this new categorized tibble. The new variables include: 
+
+`app_id`
+
+`app_name`
+
+`size_bytes`
+
+`currency_type`
+
+`app_price`
+
+`app_version`
+
+`age_rating`
+
+`app_genre`
+
+`devices_supported`
+
+`number_screenshots`
+
+`languages_supported`
+
+`vpp_lic`
 
 ```{r}
 basic_info <- tibble(app_id = apps2$id, 
@@ -106,6 +133,18 @@ basic_info <- tibble(app_id = apps2$id,
                      vpp_lic = apps2$vpp_lic)
 ```
 
+The second tibble I am making is called `ratings` which is a data frame including the app's ID and then the rating variables. This process is the same as above where I am taking variabels from `apps2` and changing the names. The new variables include:
+
+`app_id`
+
+`rating_count_tot`
+
+`rating_vount_ver`
+
+`avg_rating_tot`
+
+`avg_rating_ver`
+
 ```{r}
 ratings <- tibble(app_id = apps2$id,
                   rating_count_tot = apps2$rating_count_tot,
@@ -114,5 +153,46 @@ ratings <- tibble(app_id = apps2$id,
                   avg_rating_ver = apps2$user_rating_ver)
 ```
 
+The last thing I want to do for data cleaning is to create a new variable in `ratings` called `diff_rating_ver` which will be the difference between the average rating for the current version and the average rating for all versions. This will be potentially useful for future analysis to see if an app has improved recently.
+
+```{r}
+ratings$diff_rating_ver <- ratings$avg_rating_ver - ratings$avg_rating_tot
+head(ratings[,c(4,5,6)])
+```
+
+After creating this new variable, I am using the `head()` function to see the first 5 rows of `ratings` but specifically only `avg_rating_tot`, `avg_rating_ver`, and the new variable `diff_rating_ver`. Doing so allow us to make sure that the new variable was made correctly and in this case we can confirm that the variable was made correctly.
+
+Now that I have completed the data cleaning, I am going to export the tibbles I have created and put them into my `/data` folder for future use. Doing so will allow for future use without having to run this document and when I come back to this document in the future to make changes, I can update the files in the `/data` folder. 
+
+```{r}
+write.csv(basic_info,"data\\basic_info.csv", row.names = FALSE)
+write.csv(ratings,"data\\ratings.csv", row.names = FALSE)
+```
+
+## Data Visualization
+
+Now that the data is tidy, we are ready to show simple descriptive statistics and plots. I want to first dive into `ratings`.
+
+I am going to use the `summary()` function to show the 5 number summary and the mean for `ratings$rating_count_tot`.
+
+```{r}
+summary(ratings$rating_count_tot)
+```
+
+After seeing, the results I see there is a huge discrepency from the 3rd quartile and the maximum value and I also want to see how many apps have 0 ratings so next I will find the count of how many apps have 0 ratings using the `match()` function.
+
+```{r}
+match(0,ratings$rating_count_tot)
+```
+
+After seeing that 200 apps have 0 total ratings, I will have to be ready for that in the future for analysis.
+
+The next thing I want to look into is the new variable I created `diff_rating_tot`
+
+```{r}
+ggplot(ratings,aes(x=diff_rating_ver)) + geom_bar() + theme_bw() + labs(x = "Avg Version Rating - Avg Total Rating", y = "Count", title = "Distribution of Difference in Version Ratings from Total Ratings") 
+```
+
+Looking at the graph above, the large majority of apps have 0 difference between the average rating for the current version and the average rating of all versions.
 
 

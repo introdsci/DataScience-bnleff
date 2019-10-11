@@ -1646,21 +1646,22 @@ $(document).ready(function () {
 </div>
 
 
-<pre><code>## ── Attaching packages ───────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.2.1     ✔ purrr   0.3.2
 ## ✔ tibble  2.1.3     ✔ dplyr   0.8.3
 ## ✔ tidyr   0.8.3     ✔ stringr 1.4.0
 ## ✔ readr   1.3.1     ✔ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ──────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>## #refugeeswelcome</code></pre>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
 <p>In order to understand why I am diving into this topic, I need to explain the motivation behind it. Growing up, video games have been a big aspect of not only my life, but society in general. Lately there has been a change in the climate of gaming from single player relaxing games to the creation of competitve online gaming and eSports as we know it today. A very influential aspect of this change is the introduction of microtransactions and virtual currency. I want to study into mobile games specifically to see the effect of microtransactions on things such as average ratings, game sales, and other mobile game statistics.</p>
 </div>
 <div id="data-set" class="section level2">
 <h2>Data Set</h2>
-<pre class="r"><code>apps &lt;- read_csv(&quot;/Users/brandonleff/Desktop/math385/portfolio/DataScience-bnleff/data/AppleStore.csv&quot;)</code></pre>
+<pre class="r"><code>apps &lt;- read_csv(&quot;data/AppleStore.csv&quot;)</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   id = col_double(),
@@ -1710,6 +1711,54 @@ $(document).ready(function () {
 <p><code>lang.num</code> is the number of supported languages for the app.</p>
 <p><code>vpp_lic</code> is if the Vpp Device Based Licensing is enabled.</p>
 <p><code>game_enab</code> is not explained in the data set and is a column of 0’s so we will delete this variable.</p>
+</div>
+<div id="data-cleaning-and-preparing-tidy-data" class="section level2">
+<h2>Data Cleaning and Preparing Tidy Data</h2>
+<p>In order to clean this data set I had to do deep research into the data set. I first realized that there were 11100 observations, but in the Kaggle data set description, I saw that there were 7197 observations. When looking at the data set, I realized that there were <code>NA</code> values for <code>track_name</code> which is the app name. I want to delete the rows where the <code>track_name</code> is <code>NA</code> and store that into a new data frame called <code>apps2</code>.</p>
+<pre class="r"><code>apps2 &lt;- apps %&gt;% 
+  filter(!is.na(track_name))
+nrow(apps2)</code></pre>
+<pre><code>## [1] 7197</code></pre>
+<p>After deleting the rows with <code>NA</code> values for <code>track_name</code> we now have the correct number of observations (7197) for the data set.</p>
+<p>The next step in the data cleaning process is to change certain variables from character data to factors. Factors are a statistical data type used to store categorical data. I am specifically changing <code>cont_rating</code>, which is the content rating with units of age, to a factor with the levels of 4+, 9+, 12+, and 17+.</p>
+<pre class="r"><code>apps2$cont_rating &lt;- factor(apps2$cont_rating, levels = c(&quot;12+&quot;, &quot;17+&quot;, &quot;4+&quot;, &quot;9+&quot;))
+apps2$cont_rating &lt;- apps2$cont_rating %&gt;% fct_relevel(&quot;4+&quot;,&quot;9+&quot;,&quot;12+&quot;,&quot;17+&quot;)</code></pre>
+<p>After making those changes to the <code>apps2</code> data frame, I now want to break up the data frame into smaller tibbles specifically defined for different aspects of the project. <code>basic_info</code> is a data frame including the apps’ identification and basic information that doesn’t involve people’s ratings on the app. In this process, I am taking previous variables from the <code>apps2</code> data frame and renaming them into this new categorized tibble. The new variables include:</p>
+<p><code>app_id</code></p>
+<p><code>app_name</code></p>
+<p><code>size_bytes</code></p>
+<p><code>currency_type</code></p>
+<p><code>app_price</code></p>
+<p><code>app_version</code></p>
+<p><code>age_rating</code></p>
+<p><code>app_genre</code></p>
+<p><code>devices_supported</code></p>
+<p><code>number_screenshots</code></p>
+<p><code>languages_supported</code></p>
+<p><code>vpp_lic</code></p>
+<pre class="r"><code>basic_info &lt;- tibble(app_id = apps2$id, 
+                     app_name = apps2$track_name, 
+                     size_bytes = apps2$size_bytes, 
+                     currency_type = apps2$currency,
+                     app_price = apps2$price,
+                     app_version = apps2$ver,
+                     age_rating = apps2$cont_rating,
+                     app_genre = apps2$prime_genre,
+                     devices_supported = apps2$sup_devices.num,
+                     number_screenshots = apps2$ipadSc_urls.num,
+                     languages_supported = apps2$lang.num,
+                     vpp_lic = apps2$vpp_lic)</code></pre>
+<p>The second tibble I am making is called <code>ratings</code> which is a data frame including the app’s ID and then the rating variables. This process is the same as above where I am taking variabels from <code>apps2</code> and changing the names. The new variables include:</p>
+<p><code>app_id</code></p>
+<p><code>rating_count_tot</code></p>
+<p><code>rating_vount_ver</code></p>
+<p><code>avg_rating_tot</code></p>
+<p><code>avg_rating_ver</code></p>
+<pre class="r"><code>ratings &lt;- tibble(app_id = apps2$id,
+                  rating_count_tot = apps2$rating_count_tot,
+                  rating_count_ver = apps2$rating_count_ver,
+                  avg_rating_tot = apps2$user_rating,
+                  avg_rating_ver = apps2$user_rating_ver)</code></pre>
 </div>
 
 
