@@ -165,8 +165,8 @@ After creating this new variable, I am using the `head()` function to see the fi
 Now that I have completed the data cleaning, I am going to export the tibbles I have created and put them into my `/data` folder for future use. Doing so will allow for future use without having to run this document and when I come back to this document in the future to make changes, I can update the files in the `/data` folder. 
 
 ```{r}
-write.csv(basic_info,"data\\basic_info.csv", row.names = FALSE)
-write.csv(ratings,"data\\ratings.csv", row.names = FALSE)
+write.csv(basic_info,"data/basic_info.csv", row.names = FALSE)
+write.csv(ratings,"data/ratings.csv", row.names = FALSE)
 ```
 
 ## Data Visualization
@@ -193,6 +193,37 @@ The next thing I want to look into is the new variable I created `diff_rating_to
 ggplot(ratings,aes(x=diff_rating_ver)) + geom_bar() + theme_bw() + labs(x = "Avg Version Rating - Avg Total Rating", y = "Count", title = "Distribution of Difference in Version Ratings from Total Ratings") 
 ```
 
-Looking at the graph above, the large majority of apps have 0 difference between the average rating for the current version and the average rating of all versions.
+Looking at the graph above, the large majority of apps have 0 difference between the average rating for the current version and the average rating of all versions. The are more apps that have a negative value for `diff_rating_ver` which means that the average rating for all versions is higher than the average rating for the current version. This could be due to the amount of ratings but that will be during analysis.
+
+The next thing I want to look at is from within `basic_info` if the variable `age_rating` has a relationship with the variable `app_price`. I will use a grouped barchart for this visualization.
+
+The first thing I want to do is check the counts of `app_price` to see where the data mostly lives.
+
+```{r}
+table(basic_info$app_price)
+```
+
+The large majority of the data is less than 10.00 therefore for the graph I will only include the apps with prices strictly under 10.00.
+
+```{r}
+basic_info %>% filter(app_price < 10) %>% ggplot(aes(x = app_price, fill = age_rating)) + geom_bar(position = "dodge") + labs(x = "App Price", y = "Count", title = "Age Rating Within App Price") + theme_bw() + scale_fill_discrete(name = "Age Rating")
+```
+
+Looking at the graph abofe, within each app price, the majority of apps are 4+, but the largest amount of data are apps that are 0.0 dollars and 4+ for the age rating. The same pattern typically follows for all app prices where 4+ is the most common with 12+, 9+, and 17+ following in the respective order.
+
+The last visualization I want to look at is a simple box plot in the `basic_info` data frame of the variable `languages_supported` within Age Rating. This will show some basic information about if language support is important to age rating.
+
+I also want to show the mean for each boxplot so I am defining a new function `fun_mean` which will take the mean of a given data set.
+
+```{r}
+fun_mean <- function(x){
+  return(data.frame(y=mean(x),label=mean(x,na.rm=T)))}
+```
+
+```{r}
+basic_info %>% ggplot(aes(x = age_rating, y = languages_supported)) + geom_boxplot(outlier.colour = "red", outlier.shape = 1) + theme_bw() + coord_flip() + labs(y = "Languages Supported", x = "Age Rating", title = "Distribution of Languages Supported within Age Rating") + stat_summary(fun.y = mean, geom ="point", color = "blue", size=3) + stat_summary(fun.data = fun_mean, geom="text", vjust=-1)
+```
+
+Looking at the graph above
 
 
