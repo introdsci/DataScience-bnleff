@@ -2,6 +2,7 @@
 title: "Deliverable 1"
 author: "Brandon Leff"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -15,7 +16,7 @@ library(sjPlot)
 
 ## Introduction 
 
-In order to understand why I am diving into this topic, I need to explain the motivation behind it. Growing up, video games have been a big aspect of not only my life, but society in general. Lately there has been a change in the climate of gaming from single player relaxing games to the creation of competitve online gaming and eSports as we know it today. A very influential aspect of this change is the introduction of microtransactions and virtual currency. I want to study into mobile games specifically to see the effect of microtransactions on things such as average ratings, game sales, and other mobile game statistics.
+In order to understand why I am diving into this topic, I need to explain the motivation behind it. Growing up, video games have been a big aspect of not only my life, but society in general. Lately there has been a change in the climate of gaming from single player relaxing games to the creation of competitve online gaming and eSports as we know it today. A very influential aspect of this change is the introduction of microtransactions and virtual currency. I want to research mobile games specifically to see the effect of microtransactions on things such as average ratings, game sales, and other mobile game statistics.
 
 ## Data Set
 
@@ -224,6 +225,20 @@ fun_mean <- function(x){
 basic_info %>% ggplot(aes(x = age_rating, y = languages_supported)) + geom_boxplot(outlier.colour = "red", outlier.shape = 1) + theme_bw() + coord_flip() + labs(y = "Languages Supported", x = "Age Rating", title = "Distribution of Languages Supported within Age Rating") + stat_summary(fun.y = mean, geom ="point", color = "blue", size=3) + stat_summary(fun.data = fun_mean, geom="text", vjust=-1)
 ```
 
-Looking at the graph above
+Looking at the graph above, the medians of languages supported are all relatively similar for apps of all age rating. To better understand the distribution, I also included a blue dot for each category representing the mean. There are heavy amounts of outliers for all categories, but 4+ has the most amount of outliers which ultimately affect the mean.
+
+## Potential Research Questions
+
+After looking into the data, I have seen a very interesting project in the `age_rating` variable. I am going to switch the focus of this project away from microtransactions and I would like to know if ratings for apps differ between age ratings. 
+
+1.) Do average ratings differ for each age group? Would there be a positive in making your app a certain age level?
+
+2.) Do age groups have a specific price of the app? Are most apps that are 4+ free?
+
+3.) Do age groups have a correlation between what genre the app is?
+
+## Conclusion
+
+This data set is particularly interesting because it has aspects that are controlled and never touched such as the price or other aspects that the developer sets in the app store, but also has personal responses such as ratings for the current version or also the total average rating. There will be alot of potential areas for analysis and I am excited for it.
 
 
