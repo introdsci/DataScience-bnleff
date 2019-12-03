@@ -1,10 +1,82 @@
 ---
 title: "Deliverable 2"
-output: 
-  html_notebook: 
-    toc: yes
-    toc_float: True
 author: "Brandon Leff"
+output:
+  html_document:
+    df_print: paged
+    toc: yes
+  html_notebook:
+    toc: yes
+    toc_float: yes
 ---
 
+Hello and welcome to the second deliverable of my portfolio project on app store analytics and ratings of apps. This deliverable will be focused on model planning and building and working towards a predictive model to set me up for the final phase of the portfolio.
+
+First I want to write a function called `include()` which will take a library that is already installed and load it but will download a package that is not installed on the machine that is running this file. Next I will load my packages needed for this deliverable.
+```{r}
+include <- function(library_name){
+  if( !(library_name %in% installed.packages()) )
+    install.packages(library_name) 
+  library(library_name, character.only=TRUE)
+}
+include("knitr")
+purl("deliverable1.Rmd", output = "deliv1.r")
+source("deliv1.r")
+include("caret")
+include("tidyverse")
+include("rvest")
+```
+
+# Predictions from First Deliverable
+
+Based off the first deliverable, I shifted my focus from how microtransactions affected app sales to how age ratings for apps affected their overall rating. Now knowing this, I would like to see if I can predict certain app analytics such as overall rating or ratings based on the latest update. These predictions will matter because if I can create a model that can predict the rating of an app based on its content rating, then future app developers can focus their content in that age rating for higher ratings and reviews of the app.
+
+# New Data Source
+
+After looking online, I found a json file of google play store app analytics. This is a different data type than my last data source which was a csv file. Using the `jsonlite` package, I will import the json file and then convert it to a data frame to begin tidying the data using the `as.data.frame` function. This data set will complement my first data source by adding Google Play Store data which is the other most popular app store other than the Apple App Store. This data source also has data for the amount of installs the app has which could be beneficial for analysis.
+
+```{r}
+googleimport <- jsonlite::fromJSON(txt = "data/googleplay.json")
+asFrame <- as.data.frame(googleimport)
+```
+
+Now that the data is successfully loaded into the environment, it is time to tidy the data and get it ready for analysis.
+
+# Tidying the Data
+
+First, I need to understand the data set before I clean it. To do this I will explain the variables and their data types.
+
+`App` is character data of the name of the app.
+
+`Category` is character data of the genre of the app.
+
+`Rating` is numeric data of the average rating of the app.
+
+`Reviews` is numeric data of the amount of reviews for the app.
+
+`Size` is numeric data for the size of the app in megabites and gigabites.
+
+`Installs` is numeric data for the amount of installs the app has.
+
+`Type` is character data for if the app is free or paid.
+
+`Price` is character data for the price of the app.
+
+`Content Rating` is character data for the age rating of the app.
+
+`Genre` is character data for the genre of the app but `Category` will be kept instead.
+
+`Last Updated` is the date in which the app was last updated.
+
+`Current Ver` is character data for the current version of the app.
+
+`Android Ver` is character data for the androif version of the app.
+
+```{r}
+table(asFrame$`Last Updated`)
+```
+
+```{r}
+asFrame %>% filter(Installs == "Free")
+```
 
