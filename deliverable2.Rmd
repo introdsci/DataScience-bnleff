@@ -70,13 +70,108 @@ First, I need to understand the data set before I clean it. To do this I will ex
 
 `Current Ver` is character data for the current version of the app.
 
-`Android Ver` is character data for the androif version of the app.
+`Android Ver` is character data for the android version of the app.
+
+## Checking the Variables for Odd Inputs
+
+First I want to check all the variables for possible problems and then delete the problems.
 
 ```{r}
-table(asFrame$`Last Updated`)
+table(asFrame$Category)
+```
+
+After checking `Category`, I see that one response in this column is 1.9 so I will check into that to see the possible error. To do this I will use `filter()`.
+
+```{r}
+asFrame %>% filter(Category == "1.9")
+```
+
+Looking into this specific row, it seems as if the whole row is shifted left so I will delete this row.
+
+```{r}
+problem1 <- asFrame %>% filter(Category != "1.9")
+```
+
+Now that that row is taken out, I will move onto the next variable `Reviews`. I wanted to make sure that all entries in this column is a number so I will convert it to a character and then numeric so non number entries would turn to NA. Then I used `which()` to find out if any entries in the variable were non integers.
+
+```{r}
+problem1$Reviews <- as.numeric(as.character(problem1$Reviews))
+which(!grepl('^[0-9]',problem1$Reviews))
+```
+
+The next problem I want to take care of is the `Installs` variable. I want to make this better for linear regression so I will manually make a new variable `Install_Group` where apps with 0-1000+ are category 1, 5000+ to 50000+ are category 2, 100000+ to 5,000,000+ are category 3, and lastly apps with 10,000,000+ downloads are category 4.
+
+```{r}
+problem1 <- problem1 %>% mutate(Install_Group = Installs)
+problem1$Install_Group[problem1$Install_Group %in% c("0",
+                                                   "0+",
+                                                   "1+",
+                                                   "10+",
+                                                   "100+",
+                                                   "50+",
+                                                   "5+",
+                                                   "500+", 
+                                                   "1,000+")] <- "1"
+problem1$Install_Group[problem1$Install_Group %in% c("5,000+",
+                                                   "10,000+",
+                                                   "50,000+")] <- "2"
+problem1$Install_Group[problem1$Install_Group %in% c("100,000+",
+                                                   "500,000+",
+                                                   "1,000,000+",
+                                                   "5,000,000+")] <- "3"
+problem1$Install_Group[problem1$Install_Group %in% c("50,000,000+",
+                                                   "10,000,000+",
+                                                   "1,000,000,000+",
+                                                   "100,000,000+",
+                                                   "500,000,000+")] <- "4"
 ```
 
 ```{r}
-asFrame %>% filter(Installs == "Free")
+table(problem1$Install_Group)
+```
+
+Now that the new variable has been made and the categories were made, I will make it into 4 different columns with inputs of 0 and 1 for linear regression.
+
+```{r}
+problem1 <- problem1 %>% mutate(cat1 = Install_Group == "1") %>% mutate(cat2 = Install_Group == "2") %>% mutate(cat3 = Install_Group == "3") %>% mutate(cat4 = Install_Group == "4")
+problem1$cat1 <- as.numeric(problem1$cat1)
+problem1$cat2 <- as.numeric(problem1$cat2)
+problem1$cat3 <- as.numeric(problem1$cat3)
+problem1$cat4 <- as.numeric(problem1$cat4)
+```
+
+Now that the `Installs` variable cleaning is over, I will now move on to `Content Rating`. I will do the same process with the multiple columns as above.
+
+```{r}
+table(problem1$`Content Rating`)
+```
+
+```{r}
+problem1 <- problem1 %>% mutate(adult = `Content Rating` == "Adults only 18+") %>% mutate(everyone = `Content Rating` == "Everyone") %>% mutate(everyone_10 = `Content Rating` == "Everyone 10+") %>% mutate(mature_17 = `Content Rating` == "Mature 17+") %>% mutate(teen = `Content Rating` == "Mature 17+") %>% mutate(unrated = `Content Rating` == "Unrated")
+problem1$adult <- as.numeric(problem1$adult)
+problem1$everyone <- as.numeric(problem1$everyone)
+problem1$everyone_10 <- as.numeric(problem1$everyone_10)
+problem1$mature_17 <- as.numeric(problem1$mature_17)
+problem1$teen <- as.numeric(problem1$teen)
+problem1$unrated <- as.numeric(problem1$unrated)
+```
+
+Now that all the variables have been cleaned that we need for the predictions, I will create a final tibble to be ready for analysis.
+
+```{r}
+google_play <- tibble(app_name = problem1$App,
+                      genre = problem1$Category,
+                      app_rating = problem1$Rating,
+                      num_reviews = problem1$Reviews,
+                      cat1 = problem1$cat1,
+                      cat2 = problem1$cat2,
+                      cat3 = problem1$cat3,
+                      cat4 = problem1$cat4,
+                      adult = problem1$adult,
+                      everyone = problem1$everyone,
+                      everyone_10 = problem1$everyone_10,
+                      mature_17 = problem1$mature_17,
+                      teen = problem1$teen,
+                      unrated = problem1$unrated)
 ```
 

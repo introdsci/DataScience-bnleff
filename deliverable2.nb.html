@@ -2981,25 +2981,180 @@ asFrame &lt;- as.data.frame(googleimport)</code></pre>
 <p><code>Genre</code> is character data for the genre of the app but <code>Category</code> will be kept instead.</p>
 <p><code>Last Updated</code> is the date in which the app was last updated.</p>
 <p><code>Current Ver</code> is character data for the current version of the app.</p>
-<p><code>Android Ver</code> is character data for the androif version of the app.</p>
+<p><code>Android Ver</code> is character data for the android version of the app.</p>
+<div id="checking-the-variables-for-odd-inputs" class="section level2">
+<h2>Checking the Variables for Odd Inputs</h2>
+<p>First I want to check all the variables for possible problems and then delete the problems.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUoYXNGcmFtZSRgTGFzdCBVcGRhdGVkYClcbmBgYCJ9 -->
-<pre class="r"><code>table(asFrame$`Last Updated`)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUoYXNGcmFtZSRDYXRlZ29yeSlcbmBgYCJ9 -->
+<pre class="r"><code>table(asFrame$Category)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4gICAgICAgICAgICAgICAgMS45ICAgICAgQVJUX0FORF9ERVNJR04gICBBVVRPX0FORF9WRUhJQ0xFUyAgICAgICAgICAgICAgQkVBVVRZIFxuICAgICAgICAgICAgICAgICAgMSAgICAgICAgICAgICAgICAgIDY1ICAgICAgICAgICAgICAgICAgODUgICAgICAgICAgICAgICAgICA1MyBcbkJPT0tTX0FORF9SRUZFUkVOQ0UgICAgICAgICAgICBCVVNJTkVTUyAgICAgICAgICAgICAgQ09NSUNTICAgICAgIENPTU1VTklDQVRJT04gXG4gICAgICAgICAgICAgICAgMjMxICAgICAgICAgICAgICAgICA0NjAgICAgICAgICAgICAgICAgICA2MCAgICAgICAgICAgICAgICAgMzg3IFxuICAgICAgICAgICAgIERBVElORyAgICAgICAgICAgRURVQ0FUSU9OICAgICAgIEVOVEVSVEFJTk1FTlQgICAgICAgICAgICAgIEVWRU5UUyBcbiAgICAgICAgICAgICAgICAyMzQgICAgICAgICAgICAgICAgIDE1NiAgICAgICAgICAgICAgICAgMTQ5ICAgICAgICAgICAgICAgICAgNjQgXG4gICAgICAgICAgICAgRkFNSUxZICAgICAgICAgICAgIEZJTkFOQ0UgICAgICBGT09EX0FORF9EUklOSyAgICAgICAgICAgICAgICBHQU1FIFxuICAgICAgICAgICAgICAgMTk3MiAgICAgICAgICAgICAgICAgMzY2ICAgICAgICAgICAgICAgICAxMjcgICAgICAgICAgICAgICAgMTE0NCBcbiBIRUFMVEhfQU5EX0ZJVE5FU1MgICAgICBIT1VTRV9BTkRfSE9NRSAgTElCUkFSSUVTX0FORF9ERU1PICAgICAgICAgICBMSUZFU1RZTEUgXG4gICAgICAgICAgICAgICAgMzQxICAgICAgICAgICAgICAgICAgODggICAgICAgICAgICAgICAgICA4NSAgICAgICAgICAgICAgICAgMzgyIFxuTUFQU19BTkRfTkFWSUdBVElPTiAgICAgICAgICAgICBNRURJQ0FMICBORVdTX0FORF9NQUdBWklORVMgICAgICAgICAgIFBBUkVOVElORyBcbiAgICAgICAgICAgICAgICAxMzcgICAgICAgICAgICAgICAgIDQ2MyAgICAgICAgICAgICAgICAgMjgzICAgICAgICAgICAgICAgICAgNjAgXG4gICAgUEVSU09OQUxJWkFUSU9OICAgICAgICAgUEhPVE9HUkFQSFkgICAgICAgIFBST0RVQ1RJVklUWSAgICAgICAgICAgIFNIT1BQSU5HIFxuICAgICAgICAgICAgICAgIDM5MiAgICAgICAgICAgICAgICAgMzM1ICAgICAgICAgICAgICAgICA0MjQgICAgICAgICAgICAgICAgIDI2MCBcbiAgICAgICAgICAgICBTT0NJQUwgICAgICAgICAgICAgIFNQT1JUUyAgICAgICAgICAgICAgIFRPT0xTICAgIFRSQVZFTF9BTkRfTE9DQUwgXG4gICAgICAgICAgICAgICAgMjk1ICAgICAgICAgICAgICAgICAzODQgICAgICAgICAgICAgICAgIDg0MyAgICAgICAgICAgICAgICAgMjU4IFxuICAgICAgVklERU9fUExBWUVSUyAgICAgICAgICAgICBXRUFUSEVSIFxuICAgICAgICAgICAgICAgIDE3NSAgICAgICAgICAgICAgICAgIDgyIFxuIn0= -->
+<pre><code>
+                1.9      ART_AND_DESIGN   AUTO_AND_VEHICLES              BEAUTY 
+                  1                  65                  85                  53 
+BOOKS_AND_REFERENCE            BUSINESS              COMICS       COMMUNICATION 
+                231                 460                  60                 387 
+             DATING           EDUCATION       ENTERTAINMENT              EVENTS 
+                234                 156                 149                  64 
+             FAMILY             FINANCE      FOOD_AND_DRINK                GAME 
+               1972                 366                 127                1144 
+ HEALTH_AND_FITNESS      HOUSE_AND_HOME  LIBRARIES_AND_DEMO           LIFESTYLE 
+                341                  88                  85                 382 
+MAPS_AND_NAVIGATION             MEDICAL  NEWS_AND_MAGAZINES           PARENTING 
+                137                 463                 283                  60 
+    PERSONALIZATION         PHOTOGRAPHY        PRODUCTIVITY            SHOPPING 
+                392                 335                 424                 260 
+             SOCIAL              SPORTS               TOOLS    TRAVEL_AND_LOCAL 
+                295                 384                 843                 258 
+      VIDEO_PLAYERS             WEATHER 
+                175                  82 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>After checking <code>Category</code>, I see that one response in this column is 1.9 so I will check into that to see the possible error. To do this I will use <code>filter()</code>.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXNGcmFtZSAlPiUgZmlsdGVyKENhdGVnb3J5ID09IFwiMS45XCIpXG5gYGAifQ== -->
+<pre class="r"><code>asFrame %&gt;% filter(Category == &quot;1.9&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbImRhdGEuZnJhbWUiXSwibmNvbCI6MTMsIm5yb3ciOjF9LCJyZGYiOiJINHNJQUFBQUFBQUFBMlZTMzAvQ01CQ3VHME9kZ2hyL2diNzVJRFFiK0NCdkVoUmpvb2xCL1BGYXR3TWFaN3QwSFlwL3ZOck5sYkM2cE92MXU3dmVmVjl2Y3ZuUzgxOThoSkNEWE05Qmpxdk5ocU4vVzZpQmRvdjlFeUgzV0JzdHZRNDNIQ2UzYkFiNGpzYUFuMis2WTRhbklvOFdXU1FCT0w1ZkNDWHdXTkozc05MY2tBejAxaTZnaXo0eTMyWklvMCtDT3d0cmhwMGdDRTd0eUxHdVptRmJnUVhzWEMxQnJnUzNBKzJ5UjJONGxUbVZLeHlHSGR3THd2Ti9QWkNBaEFNTDljOUlnQ21QY1o3K0wxQ1QwdU5hanF3S2FoazlobWxxR2gxUkJYTWhWNmJlaENyRzU5VnBld0pMQmgrWm9mN0F2c0FrM3ZCTTBTUlorNmFyMVBpOGU4a2ljMmlQQkZmQUZhN2QzTHdHTHNFazc5L1NUT0hITk5iTnhCVzJOOHFsTFBLZVFCcG95R01wV0Z4Q2RaNjdVbndRdzdWVk9zcFZGeU5LYUpaWml2bTZLQ1d6YW15K3JaUnRrU29tdUU1eWlvSDA3SWVYRm5DUTg2S0x1QnN0Y3Y3V0xZYk5yN3BCOWM3V2R1dXZwUE5UWGVVWmlZRFBHVjlybXRCWFNJeW1tbTFKbHFTU2NXV1lhRFFqU3Vobk1VZ2tFb09VM05EM0w1bjEwOForQXdBQSJ9 -->
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["App"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Category"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Rating"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Reviews"],"name":[4],"type":["chr"],"align":["left"]},{"label":["Size"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Installs"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Type"],"name":[7],"type":["chr"],"align":["left"]},{"label":["Price"],"name":[8],"type":["chr"],"align":["left"]},{"label":["Content Rating"],"name":[9],"type":["chr"],"align":["left"]},{"label":["Genres"],"name":[10],"type":["chr"],"align":["left"]},{"label":["Last Updated"],"name":[11],"type":["chr"],"align":["left"]},{"label":["Current Ver"],"name":[12],"type":["chr"],"align":["left"]},{"label":["Android Ver"],"name":[13],"type":["chr"],"align":["left"]}],"data":[{"1":"Life Made WI-Fi Touchscreen Photo Frame","2":"1.9","3":"19","4":"3.0M","5":"1,000+","6":"Free","7":"0","8":"Everyone","9":"","10":"February 11, 2018","11":"1.0.19","12":"4.0 and up","13":""}],"options":{"columns":{"min":{},"max":[10],"total":[13]},"rows":{"min":[10],"max":[10],"total":[1]},"pages":{}}}
+  </script>
+</div>
+<!-- rnb-frame-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Looking into this specific row, it seems as if the whole row is shifted left so I will delete this row.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvYmxlbTEgPC0gYXNGcmFtZSAlPiUgZmlsdGVyKENhdGVnb3J5ICE9IFwiMS45XCIpXG5gYGAifQ== -->
+<pre class="r"><code>problem1 &lt;- asFrame %&gt;% filter(Category != &quot;1.9&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now that that row is taken out, I will move onto the next variable <code>Reviews</code>. I wanted to make sure that all entries in this column is a number so I will convert it to a character and then numeric so non number entries would turn to NA. Then I used <code>which()</code> to find out if any entries in the variable were non integers.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvYmxlbTEkUmV2aWV3cyA8LSBhcy5udW1lcmljKGFzLmNoYXJhY3Rlcihwcm9ibGVtMSRSZXZpZXdzKSlcbndoaWNoKCFncmVwbCgnXlswLTldJyxwcm9ibGVtMSRSZXZpZXdzKSlcbmBgYCJ9 -->
+<pre class="r"><code>problem1$Reviews &lt;- as.numeric(as.character(problem1$Reviews))
+which(!grepl('^[0-9]',problem1$Reviews))</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiaW50ZWdlcigwKVxuIn0= -->
+<pre><code>integer(0)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>The next problem I want to take care of is the <code>Installs</code> variable. I want to make this better for linear regression so I will manually make a new variable <code>Install_Group</code> where apps with 0-1000+ are category 1, 5000+ to 50000+ are category 2, 100000+ to 5,000,000+ are category 3, and lastly apps with 10,000,000+ downloads are category 4.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvYmxlbTEgPC0gcHJvYmxlbTEgJT4lIG11dGF0ZShJbnN0YWxsX0dyb3VwID0gSW5zdGFsbHMpXG5wcm9ibGVtMSRJbnN0YWxsX0dyb3VwW3Byb2JsZW0xJEluc3RhbGxfR3JvdXAgJWluJSBjKFwiMFwiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCIwK1wiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCIxK1wiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCIxMCtcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiMTAwK1wiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCI1MCtcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiNStcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiNTAwK1wiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiMSwwMDArXCIpXSA8LSBcIjFcIlxucHJvYmxlbTEkSW5zdGFsbF9Hcm91cFtwcm9ibGVtMSRJbnN0YWxsX0dyb3VwICVpbiUgYyhcIjUsMDAwK1wiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCIxMCwwMDArXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcIjUwLDAwMCtcIildIDwtIFwiMlwiXG5wcm9ibGVtMSRJbnN0YWxsX0dyb3VwW3Byb2JsZW0xJEluc3RhbGxfR3JvdXAgJWluJSBjKFwiMTAwLDAwMCtcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiNTAwLDAwMCtcIixcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFwiMSwwMDAsMDAwK1wiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCI1LDAwMCwwMDArXCIpXSA8LSBcIjNcIlxucHJvYmxlbTEkSW5zdGFsbF9Hcm91cFtwcm9ibGVtMSRJbnN0YWxsX0dyb3VwICVpbiUgYyhcIjUwLDAwMCwwMDArXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcIjEwLDAwMCwwMDArXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcIjEsMDAwLDAwMCwwMDArXCIsXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBcIjEwMCwwMDAsMDAwK1wiLFxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXCI1MDAsMDAwLDAwMCtcIildIDwtIFwiNFwiXG5gYGAifQ== -->
+<pre class="r"><code>problem1 &lt;- problem1 %&gt;% mutate(Install_Group = Installs)
+problem1$Install_Group[problem1$Install_Group %in% c(&quot;0&quot;,
+                                                   &quot;0+&quot;,
+                                                   &quot;1+&quot;,
+                                                   &quot;10+&quot;,
+                                                   &quot;100+&quot;,
+                                                   &quot;50+&quot;,
+                                                   &quot;5+&quot;,
+                                                   &quot;500+&quot;, 
+                                                   &quot;1,000+&quot;)] &lt;- &quot;1&quot;
+problem1$Install_Group[problem1$Install_Group %in% c(&quot;5,000+&quot;,
+                                                   &quot;10,000+&quot;,
+                                                   &quot;50,000+&quot;)] &lt;- &quot;2&quot;
+problem1$Install_Group[problem1$Install_Group %in% c(&quot;100,000+&quot;,
+                                                   &quot;500,000+&quot;,
+                                                   &quot;1,000,000+&quot;,
+                                                   &quot;5,000,000+&quot;)] &lt;- &quot;3&quot;
+problem1$Install_Group[problem1$Install_Group %in% c(&quot;50,000,000+&quot;,
+                                                   &quot;10,000,000+&quot;,
+                                                   &quot;1,000,000,000+&quot;,
+                                                   &quot;100,000,000+&quot;,
+                                                   &quot;500,000,000+&quot;)] &lt;- &quot;4&quot;</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYXNGcmFtZSAlPiUgZmlsdGVyKEluc3RhbGxzID09IFwiRnJlZVwiKVxuYGBgIn0= -->
-<pre class="r"><code>asFrame %&gt;% filter(Installs == &quot;Free&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUocHJvYmxlbTEkSW5zdGFsbF9Hcm91cClcbmBgYCJ9 -->
+<pre class="r"><code>table(problem1$Install_Group)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG4gICAxICAgIDIgICAgMyAgICA0IFxuMjcxMSAyMDEwIDQwMzkgMjA4MCBcbiJ9 -->
+<pre><code>
+   1    2    3    4 
+2711 2010 4039 2080 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now that the new variable has been made and the categories were made, I will make it into 4 different columns with inputs of 0 and 1 for linear regression.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvYmxlbTEgPC0gcHJvYmxlbTEgJT4lIG11dGF0ZShjYXQxID0gSW5zdGFsbF9Hcm91cCA9PSBcIjFcIikgJT4lIG11dGF0ZShjYXQyID0gSW5zdGFsbF9Hcm91cCA9PSBcIjJcIikgJT4lIG11dGF0ZShjYXQzID0gSW5zdGFsbF9Hcm91cCA9PSBcIjNcIikgJT4lIG11dGF0ZShjYXQ0ID0gSW5zdGFsbF9Hcm91cCA9PSBcIjRcIilcbnByb2JsZW0xJGNhdDEgPC0gYXMubnVtZXJpYyhwcm9ibGVtMSRjYXQxKVxucHJvYmxlbTEkY2F0MiA8LSBhcy5udW1lcmljKHByb2JsZW0xJGNhdDIpXG5wcm9ibGVtMSRjYXQzIDwtIGFzLm51bWVyaWMocHJvYmxlbTEkY2F0MylcbnByb2JsZW0xJGNhdDQgPC0gYXMubnVtZXJpYyhwcm9ibGVtMSRjYXQ0KVxuYGBgIn0= -->
+<pre class="r"><code>problem1 &lt;- problem1 %&gt;% mutate(cat1 = Install_Group == &quot;1&quot;) %&gt;% mutate(cat2 = Install_Group == &quot;2&quot;) %&gt;% mutate(cat3 = Install_Group == &quot;3&quot;) %&gt;% mutate(cat4 = Install_Group == &quot;4&quot;)
+problem1$cat1 &lt;- as.numeric(problem1$cat1)
+problem1$cat2 &lt;- as.numeric(problem1$cat2)
+problem1$cat3 &lt;- as.numeric(problem1$cat3)
+problem1$cat4 &lt;- as.numeric(problem1$cat4)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now that the <code>Installs</code> variable cleaning is over, I will now move on to <code>Content Rating</code>. I will do the same process with the multiple columns as above.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGFibGUocHJvYmxlbTEkYENvbnRlbnQgUmF0aW5nYClcbmBgYCJ9 -->
+<pre class="r"><code>table(problem1$`Content Rating`)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiXG5BZHVsdHMgb25seSAxOCsgICAgICAgIEV2ZXJ5b25lICAgIEV2ZXJ5b25lIDEwKyAgICAgIE1hdHVyZSAxNysgICAgICAgICAgICBUZWVuIFxuICAgICAgICAgICAgICAzICAgICAgICAgICAgODcxNCAgICAgICAgICAgICA0MTQgICAgICAgICAgICAgNDk5ICAgICAgICAgICAgMTIwOCBcbiAgICAgICAgVW5yYXRlZCBcbiAgICAgICAgICAgICAgMiBcbiJ9 -->
+<pre><code>
+Adults only 18+        Everyone    Everyone 10+      Mature 17+            Teen 
+              3            8714             414             499            1208 
+        Unrated 
+              2 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucHJvYmxlbTEgPC0gcHJvYmxlbTEgJT4lIG11dGF0ZShhZHVsdCA9IGBDb250ZW50IFJhdGluZ2AgPT0gXCJBZHVsdHMgb25seSAxOCtcIikgJT4lIG11dGF0ZShldmVyeW9uZSA9IGBDb250ZW50IFJhdGluZ2AgPT0gXCJFdmVyeW9uZVwiKSAlPiUgbXV0YXRlKGV2ZXJ5b25lXzEwID0gYENvbnRlbnQgUmF0aW5nYCA9PSBcIkV2ZXJ5b25lIDEwK1wiKSAlPiUgbXV0YXRlKG1hdHVyZV8xNyA9IGBDb250ZW50IFJhdGluZ2AgPT0gXCJNYXR1cmUgMTcrXCIpICU+JSBtdXRhdGUodGVlbiA9IGBDb250ZW50IFJhdGluZ2AgPT0gXCJNYXR1cmUgMTcrXCIpICU+JSBtdXRhdGUodW5yYXRlZCA9IGBDb250ZW50IFJhdGluZ2AgPT0gXCJVbnJhdGVkXCIpXG5wcm9ibGVtMSRhZHVsdCA8LSBhcy5udW1lcmljKHByb2JsZW0xJGFkdWx0KVxucHJvYmxlbTEkZXZlcnlvbmUgPC0gYXMubnVtZXJpYyhwcm9ibGVtMSRldmVyeW9uZSlcbnByb2JsZW0xJGV2ZXJ5b25lXzEwIDwtIGFzLm51bWVyaWMocHJvYmxlbTEkZXZlcnlvbmVfMTApXG5wcm9ibGVtMSRtYXR1cmVfMTcgPC0gYXMubnVtZXJpYyhwcm9ibGVtMSRtYXR1cmVfMTcpXG5wcm9ibGVtMSR0ZWVuIDwtIGFzLm51bWVyaWMocHJvYmxlbTEkdGVlbilcbnByb2JsZW0xJHVucmF0ZWQgPC0gYXMubnVtZXJpYyhwcm9ibGVtMSR1bnJhdGVkKVxuYGBgIn0= -->
+<pre class="r"><code>problem1 &lt;- problem1 %&gt;% mutate(adult = `Content Rating` == &quot;Adults only 18+&quot;) %&gt;% mutate(everyone = `Content Rating` == &quot;Everyone&quot;) %&gt;% mutate(everyone_10 = `Content Rating` == &quot;Everyone 10+&quot;) %&gt;% mutate(mature_17 = `Content Rating` == &quot;Mature 17+&quot;) %&gt;% mutate(teen = `Content Rating` == &quot;Mature 17+&quot;) %&gt;% mutate(unrated = `Content Rating` == &quot;Unrated&quot;)
+problem1$adult &lt;- as.numeric(problem1$adult)
+problem1$everyone &lt;- as.numeric(problem1$everyone)
+problem1$everyone_10 &lt;- as.numeric(problem1$everyone_10)
+problem1$mature_17 &lt;- as.numeric(problem1$mature_17)
+problem1$teen &lt;- as.numeric(problem1$teen)
+problem1$unrated &lt;- as.numeric(problem1$unrated)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Now that all the variables have been cleaned that we need for the predictions, I will create a final tibble to be ready for analysis.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ29vZ2xlX3BsYXkgPC0gdGliYmxlKGFwcF9uYW1lID0gcHJvYmxlbTEkQXBwLFxuICAgICAgICAgICAgICAgICAgICAgIGdlbnJlID0gcHJvYmxlbTEkQ2F0ZWdvcnksXG4gICAgICAgICAgICAgICAgICAgICAgYXBwX3JhdGluZyA9IHByb2JsZW0xJFJhdGluZyxcbiAgICAgICAgICAgICAgICAgICAgICBudW1fcmV2aWV3cyA9IHByb2JsZW0xJFJldmlld3MsXG4gICAgICAgICAgICAgICAgICAgICAgY2F0MSA9IHByb2JsZW0xJGNhdDEsXG4gICAgICAgICAgICAgICAgICAgICAgY2F0MiA9IHByb2JsZW0xJGNhdDIsXG4gICAgICAgICAgICAgICAgICAgICAgY2F0MyA9IHByb2JsZW0xJGNhdDMsXG4gICAgICAgICAgICAgICAgICAgICAgY2F0NCA9IHByb2JsZW0xJGNhdDQsXG4gICAgICAgICAgICAgICAgICAgICAgYWR1bHQgPSBwcm9ibGVtMSRhZHVsdCxcbiAgICAgICAgICAgICAgICAgICAgICBldmVyeW9uZSA9IHByb2JsZW0xJGV2ZXJ5b25lLFxuICAgICAgICAgICAgICAgICAgICAgIGV2ZXJ5b25lXzEwID0gcHJvYmxlbTEkZXZlcnlvbmVfMTAsXG4gICAgICAgICAgICAgICAgICAgICAgbWF0dXJlXzE3ID0gcHJvYmxlbTEkbWF0dXJlXzE3LFxuICAgICAgICAgICAgICAgICAgICAgIHRlZW4gPSBwcm9ibGVtMSR0ZWVuLFxuICAgICAgICAgICAgICAgICAgICAgIHVucmF0ZWQgPSBwcm9ibGVtMSR1bnJhdGVkKVxuYGBgIn0= -->
+<pre class="r"><code>google_play &lt;- tibble(app_name = problem1$App,
+                      genre = problem1$Category,
+                      app_rating = problem1$Rating,
+                      num_reviews = problem1$Reviews,
+                      cat1 = problem1$cat1,
+                      cat2 = problem1$cat2,
+                      cat3 = problem1$cat3,
+                      cat4 = problem1$cat4,
+                      adult = problem1$adult,
+                      everyone = problem1$everyone,
+                      everyone_10 = problem1$everyone_10,
+                      mature_17 = problem1$mature_17,
+                      teen = problem1$teen,
+                      unrated = problem1$unrated)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGVsaXZlcmFibGUgMiIKYXV0aG9yOiAiQnJhbmRvbiBMZWZmIgpvdXRwdXQ6CiAgaHRtbF9kb2N1bWVudDoKICAgIGRmX3ByaW50OiBwYWdlZAogICAgdG9jOiB5ZXMKICBodG1sX25vdGVib29rOgogICAgdG9jOiB5ZXMKICAgIHRvY19mbG9hdDogeWVzCi0tLQoKSGVsbG8gYW5kIHdlbGNvbWUgdG8gdGhlIHNlY29uZCBkZWxpdmVyYWJsZSBvZiBteSBwb3J0Zm9saW8gcHJvamVjdCBvbiBhcHAgc3RvcmUgYW5hbHl0aWNzIGFuZCByYXRpbmdzIG9mIGFwcHMuIFRoaXMgZGVsaXZlcmFibGUgd2lsbCBiZSBmb2N1c2VkIG9uIG1vZGVsIHBsYW5uaW5nIGFuZCBidWlsZGluZyBhbmQgd29ya2luZyB0b3dhcmRzIGEgcHJlZGljdGl2ZSBtb2RlbCB0byBzZXQgbWUgdXAgZm9yIHRoZSBmaW5hbCBwaGFzZSBvZiB0aGUgcG9ydGZvbGlvLgoKRmlyc3QgSSB3YW50IHRvIHdyaXRlIGEgZnVuY3Rpb24gY2FsbGVkIGBpbmNsdWRlKClgIHdoaWNoIHdpbGwgdGFrZSBhIGxpYnJhcnkgdGhhdCBpcyBhbHJlYWR5IGluc3RhbGxlZCBhbmQgbG9hZCBpdCBidXQgd2lsbCBkb3dubG9hZCBhIHBhY2thZ2UgdGhhdCBpcyBub3QgaW5zdGFsbGVkIG9uIHRoZSBtYWNoaW5lIHRoYXQgaXMgcnVubmluZyB0aGlzIGZpbGUuIE5leHQgSSB3aWxsIGxvYWQgbXkgcGFja2FnZXMgbmVlZGVkIGZvciB0aGlzIGRlbGl2ZXJhYmxlLgpgYGB7cn0KaW5jbHVkZSA8LSBmdW5jdGlvbihsaWJyYXJ5X25hbWUpewogIGlmKCAhKGxpYnJhcnlfbmFtZSAlaW4lIGluc3RhbGxlZC5wYWNrYWdlcygpKSApCiAgICBpbnN0YWxsLnBhY2thZ2VzKGxpYnJhcnlfbmFtZSkgCiAgbGlicmFyeShsaWJyYXJ5X25hbWUsIGNoYXJhY3Rlci5vbmx5PVRSVUUpCn0KaW5jbHVkZSgia25pdHIiKQpwdXJsKCJkZWxpdmVyYWJsZTEuUm1kIiwgb3V0cHV0ID0gImRlbGl2MS5yIikKc291cmNlKCJkZWxpdjEuciIpCmluY2x1ZGUoImNhcmV0IikKaW5jbHVkZSgidGlkeXZlcnNlIikKaW5jbHVkZSgicnZlc3QiKQpgYGAKCiMgUHJlZGljdGlvbnMgZnJvbSBGaXJzdCBEZWxpdmVyYWJsZQoKQmFzZWQgb2ZmIHRoZSBmaXJzdCBkZWxpdmVyYWJsZSwgSSBzaGlmdGVkIG15IGZvY3VzIGZyb20gaG93IG1pY3JvdHJhbnNhY3Rpb25zIGFmZmVjdGVkIGFwcCBzYWxlcyB0byBob3cgYWdlIHJhdGluZ3MgZm9yIGFwcHMgYWZmZWN0ZWQgdGhlaXIgb3ZlcmFsbCByYXRpbmcuIE5vdyBrbm93aW5nIHRoaXMsIEkgd291bGQgbGlrZSB0byBzZWUgaWYgSSBjYW4gcHJlZGljdCBjZXJ0YWluIGFwcCBhbmFseXRpY3Mgc3VjaCBhcyBvdmVyYWxsIHJhdGluZyBvciByYXRpbmdzIGJhc2VkIG9uIHRoZSBsYXRlc3QgdXBkYXRlLiBUaGVzZSBwcmVkaWN0aW9ucyB3aWxsIG1hdHRlciBiZWNhdXNlIGlmIEkgY2FuIGNyZWF0ZSBhIG1vZGVsIHRoYXQgY2FuIHByZWRpY3QgdGhlIHJhdGluZyBvZiBhbiBhcHAgYmFzZWQgb24gaXRzIGNvbnRlbnQgcmF0aW5nLCB0aGVuIGZ1dHVyZSBhcHAgZGV2ZWxvcGVycyBjYW4gZm9jdXMgdGhlaXIgY29udGVudCBpbiB0aGF0IGFnZSByYXRpbmcgZm9yIGhpZ2hlciByYXRpbmdzIGFuZCByZXZpZXdzIG9mIHRoZSBhcHAuCgojIE5ldyBEYXRhIFNvdXJjZQoKQWZ0ZXIgbG9va2luZyBvbmxpbmUsIEkgZm91bmQgYSBqc29uIGZpbGUgb2YgZ29vZ2xlIHBsYXkgc3RvcmUgYXBwIGFuYWx5dGljcy4gVGhpcyBpcyBhIGRpZmZlcmVudCBkYXRhIHR5cGUgdGhhbiBteSBsYXN0IGRhdGEgc291cmNlIHdoaWNoIHdhcyBhIGNzdiBmaWxlLiBVc2luZyB0aGUgYGpzb25saXRlYCBwYWNrYWdlLCBJIHdpbGwgaW1wb3J0IHRoZSBqc29uIGZpbGUgYW5kIHRoZW4gY29udmVydCBpdCB0byBhIGRhdGEgZnJhbWUgdG8gYmVnaW4gdGlkeWluZyB0aGUgZGF0YSB1c2luZyB0aGUgYGFzLmRhdGEuZnJhbWVgIGZ1bmN0aW9uLiBUaGlzIGRhdGEgc2V0IHdpbGwgY29tcGxlbWVudCBteSBmaXJzdCBkYXRhIHNvdXJjZSBieSBhZGRpbmcgR29vZ2xlIFBsYXkgU3RvcmUgZGF0YSB3aGljaCBpcyB0aGUgb3RoZXIgbW9zdCBwb3B1bGFyIGFwcCBzdG9yZSBvdGhlciB0aGFuIHRoZSBBcHBsZSBBcHAgU3RvcmUuIFRoaXMgZGF0YSBzb3VyY2UgYWxzbyBoYXMgZGF0YSBmb3IgdGhlIGFtb3VudCBvZiBpbnN0YWxscyB0aGUgYXBwIGhhcyB3aGljaCBjb3VsZCBiZSBiZW5lZmljaWFsIGZvciBhbmFseXNpcy4KCmBgYHtyfQpnb29nbGVpbXBvcnQgPC0ganNvbmxpdGU6OmZyb21KU09OKHR4dCA9ICJkYXRhL2dvb2dsZXBsYXkuanNvbiIpCmFzRnJhbWUgPC0gYXMuZGF0YS5mcmFtZShnb29nbGVpbXBvcnQpCmBgYAoKTm93IHRoYXQgdGhlIGRhdGEgaXMgc3VjY2Vzc2Z1bGx5IGxvYWRlZCBpbnRvIHRoZSBlbnZpcm9ubWVudCwgaXQgaXMgdGltZSB0byB0aWR5IHRoZSBkYXRhIGFuZCBnZXQgaXQgcmVhZHkgZm9yIGFuYWx5c2lzLgoKIyBUaWR5aW5nIHRoZSBEYXRhCgpGaXJzdCwgSSBuZWVkIHRvIHVuZGVyc3RhbmQgdGhlIGRhdGEgc2V0IGJlZm9yZSBJIGNsZWFuIGl0LiBUbyBkbyB0aGlzIEkgd2lsbCBleHBsYWluIHRoZSB2YXJpYWJsZXMgYW5kIHRoZWlyIGRhdGEgdHlwZXMuCgpgQXBwYCBpcyBjaGFyYWN0ZXIgZGF0YSBvZiB0aGUgbmFtZSBvZiB0aGUgYXBwLgoKYENhdGVnb3J5YCBpcyBjaGFyYWN0ZXIgZGF0YSBvZiB0aGUgZ2VucmUgb2YgdGhlIGFwcC4KCmBSYXRpbmdgIGlzIG51bWVyaWMgZGF0YSBvZiB0aGUgYXZlcmFnZSByYXRpbmcgb2YgdGhlIGFwcC4KCmBSZXZpZXdzYCBpcyBudW1lcmljIGRhdGEgb2YgdGhlIGFtb3VudCBvZiByZXZpZXdzIGZvciB0aGUgYXBwLgoKYFNpemVgIGlzIG51bWVyaWMgZGF0YSBmb3IgdGhlIHNpemUgb2YgdGhlIGFwcCBpbiBtZWdhYml0ZXMgYW5kIGdpZ2FiaXRlcy4KCmBJbnN0YWxsc2AgaXMgbnVtZXJpYyBkYXRhIGZvciB0aGUgYW1vdW50IG9mIGluc3RhbGxzIHRoZSBhcHAgaGFzLgoKYFR5cGVgIGlzIGNoYXJhY3RlciBkYXRhIGZvciBpZiB0aGUgYXBwIGlzIGZyZWUgb3IgcGFpZC4KCmBQcmljZWAgaXMgY2hhcmFjdGVyIGRhdGEgZm9yIHRoZSBwcmljZSBvZiB0aGUgYXBwLgoKYENvbnRlbnQgUmF0aW5nYCBpcyBjaGFyYWN0ZXIgZGF0YSBmb3IgdGhlIGFnZSByYXRpbmcgb2YgdGhlIGFwcC4KCmBHZW5yZWAgaXMgY2hhcmFjdGVyIGRhdGEgZm9yIHRoZSBnZW5yZSBvZiB0aGUgYXBwIGJ1dCBgQ2F0ZWdvcnlgIHdpbGwgYmUga2VwdCBpbnN0ZWFkLgoKYExhc3QgVXBkYXRlZGAgaXMgdGhlIGRhdGUgaW4gd2hpY2ggdGhlIGFwcCB3YXMgbGFzdCB1cGRhdGVkLgoKYEN1cnJlbnQgVmVyYCBpcyBjaGFyYWN0ZXIgZGF0YSBmb3IgdGhlIGN1cnJlbnQgdmVyc2lvbiBvZiB0aGUgYXBwLgoKYEFuZHJvaWQgVmVyYCBpcyBjaGFyYWN0ZXIgZGF0YSBmb3IgdGhlIGFuZHJvaWYgdmVyc2lvbiBvZiB0aGUgYXBwLgoKYGBge3J9CnRhYmxlKGFzRnJhbWUkYExhc3QgVXBkYXRlZGApCmBgYAoKYGBge3J9CmFzRnJhbWUgJT4lIGZpbHRlcihJbnN0YWxscyA9PSAiRnJlZSIpCmBgYAoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGVsaXZlcmFibGUgMiIKYXV0aG9yOiAiQnJhbmRvbiBMZWZmIgpvdXRwdXQ6CiAgaHRtbF9kb2N1bWVudDoKICAgIGRmX3ByaW50OiBwYWdlZAogICAgdG9jOiB5ZXMKICBodG1sX25vdGVib29rOgogICAgdG9jOiB5ZXMKICAgIHRvY19mbG9hdDogeWVzCi0tLQoKSGVsbG8gYW5kIHdlbGNvbWUgdG8gdGhlIHNlY29uZCBkZWxpdmVyYWJsZSBvZiBteSBwb3J0Zm9saW8gcHJvamVjdCBvbiBhcHAgc3RvcmUgYW5hbHl0aWNzIGFuZCByYXRpbmdzIG9mIGFwcHMuIFRoaXMgZGVsaXZlcmFibGUgd2lsbCBiZSBmb2N1c2VkIG9uIG1vZGVsIHBsYW5uaW5nIGFuZCBidWlsZGluZyBhbmQgd29ya2luZyB0b3dhcmRzIGEgcHJlZGljdGl2ZSBtb2RlbCB0byBzZXQgbWUgdXAgZm9yIHRoZSBmaW5hbCBwaGFzZSBvZiB0aGUgcG9ydGZvbGlvLgoKRmlyc3QgSSB3YW50IHRvIHdyaXRlIGEgZnVuY3Rpb24gY2FsbGVkIGBpbmNsdWRlKClgIHdoaWNoIHdpbGwgdGFrZSBhIGxpYnJhcnkgdGhhdCBpcyBhbHJlYWR5IGluc3RhbGxlZCBhbmQgbG9hZCBpdCBidXQgd2lsbCBkb3dubG9hZCBhIHBhY2thZ2UgdGhhdCBpcyBub3QgaW5zdGFsbGVkIG9uIHRoZSBtYWNoaW5lIHRoYXQgaXMgcnVubmluZyB0aGlzIGZpbGUuIE5leHQgSSB3aWxsIGxvYWQgbXkgcGFja2FnZXMgbmVlZGVkIGZvciB0aGlzIGRlbGl2ZXJhYmxlLgpgYGB7cn0KaW5jbHVkZSA8LSBmdW5jdGlvbihsaWJyYXJ5X25hbWUpewogIGlmKCAhKGxpYnJhcnlfbmFtZSAlaW4lIGluc3RhbGxlZC5wYWNrYWdlcygpKSApCiAgICBpbnN0YWxsLnBhY2thZ2VzKGxpYnJhcnlfbmFtZSkgCiAgbGlicmFyeShsaWJyYXJ5X25hbWUsIGNoYXJhY3Rlci5vbmx5PVRSVUUpCn0KaW5jbHVkZSgia25pdHIiKQpwdXJsKCJkZWxpdmVyYWJsZTEuUm1kIiwgb3V0cHV0ID0gImRlbGl2MS5yIikKc291cmNlKCJkZWxpdjEuciIpCmluY2x1ZGUoImNhcmV0IikKaW5jbHVkZSgidGlkeXZlcnNlIikKaW5jbHVkZSgicnZlc3QiKQpgYGAKCiMgUHJlZGljdGlvbnMgZnJvbSBGaXJzdCBEZWxpdmVyYWJsZQoKQmFzZWQgb2ZmIHRoZSBmaXJzdCBkZWxpdmVyYWJsZSwgSSBzaGlmdGVkIG15IGZvY3VzIGZyb20gaG93IG1pY3JvdHJhbnNhY3Rpb25zIGFmZmVjdGVkIGFwcCBzYWxlcyB0byBob3cgYWdlIHJhdGluZ3MgZm9yIGFwcHMgYWZmZWN0ZWQgdGhlaXIgb3ZlcmFsbCByYXRpbmcuIE5vdyBrbm93aW5nIHRoaXMsIEkgd291bGQgbGlrZSB0byBzZWUgaWYgSSBjYW4gcHJlZGljdCBjZXJ0YWluIGFwcCBhbmFseXRpY3Mgc3VjaCBhcyBvdmVyYWxsIHJhdGluZyBvciByYXRpbmdzIGJhc2VkIG9uIHRoZSBsYXRlc3QgdXBkYXRlLiBUaGVzZSBwcmVkaWN0aW9ucyB3aWxsIG1hdHRlciBiZWNhdXNlIGlmIEkgY2FuIGNyZWF0ZSBhIG1vZGVsIHRoYXQgY2FuIHByZWRpY3QgdGhlIHJhdGluZyBvZiBhbiBhcHAgYmFzZWQgb24gaXRzIGNvbnRlbnQgcmF0aW5nLCB0aGVuIGZ1dHVyZSBhcHAgZGV2ZWxvcGVycyBjYW4gZm9jdXMgdGhlaXIgY29udGVudCBpbiB0aGF0IGFnZSByYXRpbmcgZm9yIGhpZ2hlciByYXRpbmdzIGFuZCByZXZpZXdzIG9mIHRoZSBhcHAuCgojIE5ldyBEYXRhIFNvdXJjZQoKQWZ0ZXIgbG9va2luZyBvbmxpbmUsIEkgZm91bmQgYSBqc29uIGZpbGUgb2YgZ29vZ2xlIHBsYXkgc3RvcmUgYXBwIGFuYWx5dGljcy4gVGhpcyBpcyBhIGRpZmZlcmVudCBkYXRhIHR5cGUgdGhhbiBteSBsYXN0IGRhdGEgc291cmNlIHdoaWNoIHdhcyBhIGNzdiBmaWxlLiBVc2luZyB0aGUgYGpzb25saXRlYCBwYWNrYWdlLCBJIHdpbGwgaW1wb3J0IHRoZSBqc29uIGZpbGUgYW5kIHRoZW4gY29udmVydCBpdCB0byBhIGRhdGEgZnJhbWUgdG8gYmVnaW4gdGlkeWluZyB0aGUgZGF0YSB1c2luZyB0aGUgYGFzLmRhdGEuZnJhbWVgIGZ1bmN0aW9uLiBUaGlzIGRhdGEgc2V0IHdpbGwgY29tcGxlbWVudCBteSBmaXJzdCBkYXRhIHNvdXJjZSBieSBhZGRpbmcgR29vZ2xlIFBsYXkgU3RvcmUgZGF0YSB3aGljaCBpcyB0aGUgb3RoZXIgbW9zdCBwb3B1bGFyIGFwcCBzdG9yZSBvdGhlciB0aGFuIHRoZSBBcHBsZSBBcHAgU3RvcmUuIFRoaXMgZGF0YSBzb3VyY2UgYWxzbyBoYXMgZGF0YSBmb3IgdGhlIGFtb3VudCBvZiBpbnN0YWxscyB0aGUgYXBwIGhhcyB3aGljaCBjb3VsZCBiZSBiZW5lZmljaWFsIGZvciBhbmFseXNpcy4KCmBgYHtyfQpnb29nbGVpbXBvcnQgPC0ganNvbmxpdGU6OmZyb21KU09OKHR4dCA9ICJkYXRhL2dvb2dsZXBsYXkuanNvbiIpCmFzRnJhbWUgPC0gYXMuZGF0YS5mcmFtZShnb29nbGVpbXBvcnQpCmBgYAoKTm93IHRoYXQgdGhlIGRhdGEgaXMgc3VjY2Vzc2Z1bGx5IGxvYWRlZCBpbnRvIHRoZSBlbnZpcm9ubWVudCwgaXQgaXMgdGltZSB0byB0aWR5IHRoZSBkYXRhIGFuZCBnZXQgaXQgcmVhZHkgZm9yIGFuYWx5c2lzLgoKIyBUaWR5aW5nIHRoZSBEYXRhCgpGaXJzdCwgSSBuZWVkIHRvIHVuZGVyc3RhbmQgdGhlIGRhdGEgc2V0IGJlZm9yZSBJIGNsZWFuIGl0LiBUbyBkbyB0aGlzIEkgd2lsbCBleHBsYWluIHRoZSB2YXJpYWJsZXMgYW5kIHRoZWlyIGRhdGEgdHlwZXMuCgpgQXBwYCBpcyBjaGFyYWN0ZXIgZGF0YSBvZiB0aGUgbmFtZSBvZiB0aGUgYXBwLgoKYENhdGVnb3J5YCBpcyBjaGFyYWN0ZXIgZGF0YSBvZiB0aGUgZ2VucmUgb2YgdGhlIGFwcC4KCmBSYXRpbmdgIGlzIG51bWVyaWMgZGF0YSBvZiB0aGUgYXZlcmFnZSByYXRpbmcgb2YgdGhlIGFwcC4KCmBSZXZpZXdzYCBpcyBudW1lcmljIGRhdGEgb2YgdGhlIGFtb3VudCBvZiByZXZpZXdzIGZvciB0aGUgYXBwLgoKYFNpemVgIGlzIG51bWVyaWMgZGF0YSBmb3IgdGhlIHNpemUgb2YgdGhlIGFwcCBpbiBtZWdhYml0ZXMgYW5kIGdpZ2FiaXRlcy4KCmBJbnN0YWxsc2AgaXMgbnVtZXJpYyBkYXRhIGZvciB0aGUgYW1vdW50IG9mIGluc3RhbGxzIHRoZSBhcHAgaGFzLgoKYFR5cGVgIGlzIGNoYXJhY3RlciBkYXRhIGZvciBpZiB0aGUgYXBwIGlzIGZyZWUgb3IgcGFpZC4KCmBQcmljZWAgaXMgY2hhcmFjdGVyIGRhdGEgZm9yIHRoZSBwcmljZSBvZiB0aGUgYXBwLgoKYENvbnRlbnQgUmF0aW5nYCBpcyBjaGFyYWN0ZXIgZGF0YSBmb3IgdGhlIGFnZSByYXRpbmcgb2YgdGhlIGFwcC4KCmBHZW5yZWAgaXMgY2hhcmFjdGVyIGRhdGEgZm9yIHRoZSBnZW5yZSBvZiB0aGUgYXBwIGJ1dCBgQ2F0ZWdvcnlgIHdpbGwgYmUga2VwdCBpbnN0ZWFkLgoKYExhc3QgVXBkYXRlZGAgaXMgdGhlIGRhdGUgaW4gd2hpY2ggdGhlIGFwcCB3YXMgbGFzdCB1cGRhdGVkLgoKYEN1cnJlbnQgVmVyYCBpcyBjaGFyYWN0ZXIgZGF0YSBmb3IgdGhlIGN1cnJlbnQgdmVyc2lvbiBvZiB0aGUgYXBwLgoKYEFuZHJvaWQgVmVyYCBpcyBjaGFyYWN0ZXIgZGF0YSBmb3IgdGhlIGFuZHJvaWQgdmVyc2lvbiBvZiB0aGUgYXBwLgoKIyMgQ2hlY2tpbmcgdGhlIFZhcmlhYmxlcyBmb3IgT2RkIElucHV0cwoKRmlyc3QgSSB3YW50IHRvIGNoZWNrIGFsbCB0aGUgdmFyaWFibGVzIGZvciBwb3NzaWJsZSBwcm9ibGVtcyBhbmQgdGhlbiBkZWxldGUgdGhlIHByb2JsZW1zLgoKYGBge3J9CnRhYmxlKGFzRnJhbWUkQ2F0ZWdvcnkpCmBgYAoKQWZ0ZXIgY2hlY2tpbmcgYENhdGVnb3J5YCwgSSBzZWUgdGhhdCBvbmUgcmVzcG9uc2UgaW4gdGhpcyBjb2x1bW4gaXMgMS45IHNvIEkgd2lsbCBjaGVjayBpbnRvIHRoYXQgdG8gc2VlIHRoZSBwb3NzaWJsZSBlcnJvci4gVG8gZG8gdGhpcyBJIHdpbGwgdXNlIGBmaWx0ZXIoKWAuCgpgYGB7cn0KYXNGcmFtZSAlPiUgZmlsdGVyKENhdGVnb3J5ID09ICIxLjkiKQpgYGAKCkxvb2tpbmcgaW50byB0aGlzIHNwZWNpZmljIHJvdywgaXQgc2VlbXMgYXMgaWYgdGhlIHdob2xlIHJvdyBpcyBzaGlmdGVkIGxlZnQgc28gSSB3aWxsIGRlbGV0ZSB0aGlzIHJvdy4KCmBgYHtyfQpwcm9ibGVtMSA8LSBhc0ZyYW1lICU+JSBmaWx0ZXIoQ2F0ZWdvcnkgIT0gIjEuOSIpCmBgYAoKTm93IHRoYXQgdGhhdCByb3cgaXMgdGFrZW4gb3V0LCBJIHdpbGwgbW92ZSBvbnRvIHRoZSBuZXh0IHZhcmlhYmxlIGBSZXZpZXdzYC4gSSB3YW50ZWQgdG8gbWFrZSBzdXJlIHRoYXQgYWxsIGVudHJpZXMgaW4gdGhpcyBjb2x1bW4gaXMgYSBudW1iZXIgc28gSSB3aWxsIGNvbnZlcnQgaXQgdG8gYSBjaGFyYWN0ZXIgYW5kIHRoZW4gbnVtZXJpYyBzbyBub24gbnVtYmVyIGVudHJpZXMgd291bGQgdHVybiB0byBOQS4gVGhlbiBJIHVzZWQgYHdoaWNoKClgIHRvIGZpbmQgb3V0IGlmIGFueSBlbnRyaWVzIGluIHRoZSB2YXJpYWJsZSB3ZXJlIG5vbiBpbnRlZ2Vycy4KCmBgYHtyfQpwcm9ibGVtMSRSZXZpZXdzIDwtIGFzLm51bWVyaWMoYXMuY2hhcmFjdGVyKHByb2JsZW0xJFJldmlld3MpKQp3aGljaCghZ3JlcGwoJ15bMC05XScscHJvYmxlbTEkUmV2aWV3cykpCmBgYAoKVGhlIG5leHQgcHJvYmxlbSBJIHdhbnQgdG8gdGFrZSBjYXJlIG9mIGlzIHRoZSBgSW5zdGFsbHNgIHZhcmlhYmxlLiBJIHdhbnQgdG8gbWFrZSB0aGlzIGJldHRlciBmb3IgbGluZWFyIHJlZ3Jlc3Npb24gc28gSSB3aWxsIG1hbnVhbGx5IG1ha2UgYSBuZXcgdmFyaWFibGUgYEluc3RhbGxfR3JvdXBgIHdoZXJlIGFwcHMgd2l0aCAwLTEwMDArIGFyZSBjYXRlZ29yeSAxLCA1MDAwKyB0byA1MDAwMCsgYXJlIGNhdGVnb3J5IDIsIDEwMDAwMCsgdG8gNSwwMDAsMDAwKyBhcmUgY2F0ZWdvcnkgMywgYW5kIGxhc3RseSBhcHBzIHdpdGggMTAsMDAwLDAwMCsgZG93bmxvYWRzIGFyZSBjYXRlZ29yeSA0LgoKYGBge3J9CnByb2JsZW0xIDwtIHByb2JsZW0xICU+JSBtdXRhdGUoSW5zdGFsbF9Hcm91cCA9IEluc3RhbGxzKQpwcm9ibGVtMSRJbnN0YWxsX0dyb3VwW3Byb2JsZW0xJEluc3RhbGxfR3JvdXAgJWluJSBjKCIwIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIjArIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIjErIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIjEwKyIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICIxMDArIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIjUwKyIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICI1KyIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICI1MDArIiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICIxLDAwMCsiKV0gPC0gIjEiCnByb2JsZW0xJEluc3RhbGxfR3JvdXBbcHJvYmxlbTEkSW5zdGFsbF9Hcm91cCAlaW4lIGMoIjUsMDAwKyIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICIxMCwwMDArIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIjUwLDAwMCsiKV0gPC0gIjIiCnByb2JsZW0xJEluc3RhbGxfR3JvdXBbcHJvYmxlbTEkSW5zdGFsbF9Hcm91cCAlaW4lIGMoIjEwMCwwMDArIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIjUwMCwwMDArIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIjEsMDAwLDAwMCsiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiNSwwMDAsMDAwKyIpXSA8LSAiMyIKcHJvYmxlbTEkSW5zdGFsbF9Hcm91cFtwcm9ibGVtMSRJbnN0YWxsX0dyb3VwICVpbiUgYygiNTAsMDAwLDAwMCsiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiMTAsMDAwLDAwMCsiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiMSwwMDAsMDAwLDAwMCsiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiMTAwLDAwMCwwMDArIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIjUwMCwwMDAsMDAwKyIpXSA8LSAiNCIKYGBgCgpgYGB7cn0KdGFibGUocHJvYmxlbTEkSW5zdGFsbF9Hcm91cCkKYGBgCgpOb3cgdGhhdCB0aGUgbmV3IHZhcmlhYmxlIGhhcyBiZWVuIG1hZGUgYW5kIHRoZSBjYXRlZ29yaWVzIHdlcmUgbWFkZSwgSSB3aWxsIG1ha2UgaXQgaW50byA0IGRpZmZlcmVudCBjb2x1bW5zIHdpdGggaW5wdXRzIG9mIDAgYW5kIDEgZm9yIGxpbmVhciByZWdyZXNzaW9uLgoKYGBge3J9CnByb2JsZW0xIDwtIHByb2JsZW0xICU+JSBtdXRhdGUoY2F0MSA9IEluc3RhbGxfR3JvdXAgPT0gIjEiKSAlPiUgbXV0YXRlKGNhdDIgPSBJbnN0YWxsX0dyb3VwID09ICIyIikgJT4lIG11dGF0ZShjYXQzID0gSW5zdGFsbF9Hcm91cCA9PSAiMyIpICU+JSBtdXRhdGUoY2F0NCA9IEluc3RhbGxfR3JvdXAgPT0gIjQiKQpwcm9ibGVtMSRjYXQxIDwtIGFzLm51bWVyaWMocHJvYmxlbTEkY2F0MSkKcHJvYmxlbTEkY2F0MiA8LSBhcy5udW1lcmljKHByb2JsZW0xJGNhdDIpCnByb2JsZW0xJGNhdDMgPC0gYXMubnVtZXJpYyhwcm9ibGVtMSRjYXQzKQpwcm9ibGVtMSRjYXQ0IDwtIGFzLm51bWVyaWMocHJvYmxlbTEkY2F0NCkKYGBgCgpOb3cgdGhhdCB0aGUgYEluc3RhbGxzYCB2YXJpYWJsZSBjbGVhbmluZyBpcyBvdmVyLCBJIHdpbGwgbm93IG1vdmUgb24gdG8gYENvbnRlbnQgUmF0aW5nYC4gSSB3aWxsIGRvIHRoZSBzYW1lIHByb2Nlc3Mgd2l0aCB0aGUgbXVsdGlwbGUgY29sdW1ucyBhcyBhYm92ZS4KCmBgYHtyfQp0YWJsZShwcm9ibGVtMSRgQ29udGVudCBSYXRpbmdgKQpgYGAKCmBgYHtyfQpwcm9ibGVtMSA8LSBwcm9ibGVtMSAlPiUgbXV0YXRlKGFkdWx0ID0gYENvbnRlbnQgUmF0aW5nYCA9PSAiQWR1bHRzIG9ubHkgMTgrIikgJT4lIG11dGF0ZShldmVyeW9uZSA9IGBDb250ZW50IFJhdGluZ2AgPT0gIkV2ZXJ5b25lIikgJT4lIG11dGF0ZShldmVyeW9uZV8xMCA9IGBDb250ZW50IFJhdGluZ2AgPT0gIkV2ZXJ5b25lIDEwKyIpICU+JSBtdXRhdGUobWF0dXJlXzE3ID0gYENvbnRlbnQgUmF0aW5nYCA9PSAiTWF0dXJlIDE3KyIpICU+JSBtdXRhdGUodGVlbiA9IGBDb250ZW50IFJhdGluZ2AgPT0gIk1hdHVyZSAxNysiKSAlPiUgbXV0YXRlKHVucmF0ZWQgPSBgQ29udGVudCBSYXRpbmdgID09ICJVbnJhdGVkIikKcHJvYmxlbTEkYWR1bHQgPC0gYXMubnVtZXJpYyhwcm9ibGVtMSRhZHVsdCkKcHJvYmxlbTEkZXZlcnlvbmUgPC0gYXMubnVtZXJpYyhwcm9ibGVtMSRldmVyeW9uZSkKcHJvYmxlbTEkZXZlcnlvbmVfMTAgPC0gYXMubnVtZXJpYyhwcm9ibGVtMSRldmVyeW9uZV8xMCkKcHJvYmxlbTEkbWF0dXJlXzE3IDwtIGFzLm51bWVyaWMocHJvYmxlbTEkbWF0dXJlXzE3KQpwcm9ibGVtMSR0ZWVuIDwtIGFzLm51bWVyaWMocHJvYmxlbTEkdGVlbikKcHJvYmxlbTEkdW5yYXRlZCA8LSBhcy5udW1lcmljKHByb2JsZW0xJHVucmF0ZWQpCmBgYAoKTm93IHRoYXQgYWxsIHRoZSB2YXJpYWJsZXMgaGF2ZSBiZWVuIGNsZWFuZWQgdGhhdCB3ZSBuZWVkIGZvciB0aGUgcHJlZGljdGlvbnMsIEkgd2lsbCBjcmVhdGUgYSBmaW5hbCB0aWJibGUgdG8gYmUgcmVhZHkgZm9yIGFuYWx5c2lzLgoKYGBge3J9Cmdvb2dsZV9wbGF5IDwtIHRpYmJsZShhcHBfbmFtZSA9IHByb2JsZW0xJEFwcCwKICAgICAgICAgICAgICAgICAgICAgIGdlbnJlID0gcHJvYmxlbTEkQ2F0ZWdvcnksCiAgICAgICAgICAgICAgICAgICAgICBhcHBfcmF0aW5nID0gcHJvYmxlbTEkUmF0aW5nLAogICAgICAgICAgICAgICAgICAgICAgbnVtX3Jldmlld3MgPSBwcm9ibGVtMSRSZXZpZXdzLAogICAgICAgICAgICAgICAgICAgICAgY2F0MSA9IHByb2JsZW0xJGNhdDEsCiAgICAgICAgICAgICAgICAgICAgICBjYXQyID0gcHJvYmxlbTEkY2F0MiwKICAgICAgICAgICAgICAgICAgICAgIGNhdDMgPSBwcm9ibGVtMSRjYXQzLAogICAgICAgICAgICAgICAgICAgICAgY2F0NCA9IHByb2JsZW0xJGNhdDQsCiAgICAgICAgICAgICAgICAgICAgICBhZHVsdCA9IHByb2JsZW0xJGFkdWx0LAogICAgICAgICAgICAgICAgICAgICAgZXZlcnlvbmUgPSBwcm9ibGVtMSRldmVyeW9uZSwKICAgICAgICAgICAgICAgICAgICAgIGV2ZXJ5b25lXzEwID0gcHJvYmxlbTEkZXZlcnlvbmVfMTAsCiAgICAgICAgICAgICAgICAgICAgICBtYXR1cmVfMTcgPSBwcm9ibGVtMSRtYXR1cmVfMTcsCiAgICAgICAgICAgICAgICAgICAgICB0ZWVuID0gcHJvYmxlbTEkdGVlbiwKICAgICAgICAgICAgICAgICAgICAgIHVucmF0ZWQgPSBwcm9ibGVtMSR1bnJhdGVkKQpgYGAKCg==</div>
 
 
 </div>
