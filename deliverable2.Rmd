@@ -13,6 +13,7 @@ output:
 Hello and welcome to the second deliverable of my portfolio project on app store analytics and ratings of apps. This deliverable will be focused on model planning and building and working towards a predictive model to set me up for the final phase of the portfolio.
 
 First I want to write a function called `include()` which will take a library that is already installed and load it but will download a package that is not installed on the machine that is running this file. Next I will load my packages needed for this deliverable.
+
 ```{r}
 include <- function(library_name){
   if( !(library_name %in% installed.packages()) )
@@ -25,6 +26,8 @@ source("deliv1.r")
 include("caret")
 include("tidyverse")
 include("rvest")
+include("ggplot2")
+include("reticulate")
 ```
 
 # Predictions from First Deliverable
@@ -143,7 +146,7 @@ problem1$cat4 <- as.numeric(problem1$cat4)
 Now that the `Installs` variable cleaning is over, I will now move on to `Content Rating`. I will do the same process with the multiple columns as above.
 
 ```{r}
-table(problem1$`Content Rating`)
+table(problem1$`Content Rating`, useNA = "always")
 ```
 
 ```{r}
@@ -174,4 +177,89 @@ google_play <- tibble(app_name = problem1$App,
                       teen = problem1$teen,
                       unrated = problem1$unrated)
 ```
+
+After creating the table, I realized that `app_rating` still has NA data for some of the rows so I will take out the rows where app_rating = NA.
+
+```{r}
+table(google_play$app_rating, useNA = "always")
+```
+
+```{r}
+google_play <- google_play %>% filter(app_rating != "NaN")
+```
+
+# Performing Linear Regression
+
+Now that the data is prepped and ready to observe in analysis, I will make a partition of the data for testing and predicting respectively. I want to predict the app_rating so I will create the partition on `app_rating`. The partition is splitting the data into two groups of randomly chosen data points where one group has 70% of the data and the other has 30%.
+
+```{r}
+sample_selection <- createDataPartition(google_play$app_rating, p=0.70, list = FALSE)
+```
+
+After creating the partition, I will make the training and the test data sets. The train set will be 70% of the data and will be used to make the model.
+
+```{r}
+train <- google_play[sample_selection,]
+test <- google_play[-sample_selection,]
+```
+
+Now I will create the model using the 4 categories I made about amount of downloads and the 6 categories I made about content rating.
+
+```{r}
+train_model <- lm(app_rating ~ cat1 + cat2 + cat3 + cat4 + adult + everyone + everyone_10 + mature_17 + teen + unrated, data = train)
+summary(train_model)
+```
+
+After seeing the results of the model, I see that `cat4`, `adult`, and `teen` were not defined bevause of singularities so in my revised model I will take those variables out.
+
+```{r}
+train_revised_model <- lm(app_rating ~ cat1 + cat2 + cat3 + everyone + everyone_10 + mature_17 + unrated, data = train)
+summary(train_revised_model)
+```
+
+```{r}
+predictions <- train_revised_model %>% predict(test)
+R2(predictions,test$app_rating)
+MAE(predictions,test$app_rating)
+```
+
+The r-squared value is the measure of how well our model can explain the variation in the test data. This means that our model can explain 3% of the variation in the test dataset.
+
+The mean average error is a measure of the average length of distance both positive and negative from the actual point to the line our model makes. In this case the MAE is 0.35 stars out of 5.
+
+# Exporting the Train Data for Python Analysis
+
+Now that the model has been made in R, I want to make the model in python to where I can provide easier visuals for the model.
+
+```{r}
+python <- problem1 %>% filter(Rating != "NaN")
+python_final <- tibble(app_rating = python$Rating,
+                                  content_rating = python$`Content Rating`)
+```
+
+```{r}
+write.csv(python_final,"data/python_model.csv", row.names = FALSE)
+```
+
+After importing the data into Python and creating a model this is the scatterplot that I produced of App Rating based on Content Rating within the google store data set. As you can see, the `Everyone` category has a wide spread of ratings and the `Everyone 10+` category has a less low rated apps.
+
+![Python Graph](data/python.png)
+![Python Numbers](data/pythonnum.png)
+These numbers are what the model predicts is the average rating of apps within each group of Content Rating. The first number is the average for the `Adults only 18+` category and the 5 following numbers are offsets relative to the first number. The following averages are calculated:
+
+`Adults only 18+` = 4.29 Stars
+
+`Everyone` = 4.18 Stars
+
+`Everyone 10+` = 4.26 Stars
+
+`Mature 17+` = 4.11 Stars
+
+`Teen` = 4.23 Strs
+
+`Unrated` = 4.10 Stars
+
+# Limitations of the Model
+
+In this case there are several limitations that the model suffers from. Certain values of Content Rating only have a few data points in them such as the Adults only category and the Unrated category. This model also suffers from external bias where apps are normally only reviewed if the user has an extreme experience with the app on both sides of the spectrum. Usual reviews are given 5 or 1 star for this reason because not everyone would take the time to review an app just to give 2 or 3 stars. This results in data that is skewed towards the higher end of the spectrum of reviews with most apps having an average rating of 4.5 or higher. As seen in the python model, most apps within each group of content rating have an average near 4.25 stars and this is because of the raw nature of voluntary response data.
 
