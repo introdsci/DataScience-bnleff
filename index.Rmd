@@ -24,5 +24,7 @@ https://introdsci.github.io/DataScience-bnleff/deliverable2.html
 
 ### 3. Results and Operationalization
 
-Coming soon...
+This file fixes the errors made in deliverable 2 and 1, creating a model with multiple explanatory variables, discussing the social implications of the research into app analytics, and also summarises my outlook on this topic as my choice for the portfolio.
+
+https://introdsci.github.io/DataScience-bnleff/deliverable3.html
 
