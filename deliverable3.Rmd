@@ -1,0 +1,162 @@
+---
+title: "Deliverable 3"
+author: "Brandon Leff"
+output: html_notebook
+---
+
+# Loading in All Necessary Packages
+
+```{r}
+library('tidyverse')
+library('knitr')
+library('sjPlot')
+library('forcats')
+library('caret')
+```
+
+# Loading in Prior Deliverables
+
+```{r}
+purl("deliverable1.Rmd", output = "deliv1.r")
+source("deliv1.r")
+purl("deliverable2.Rmd", output = "deliv2.r")
+source("deliv2.r")
+```
+
+# Introduction
+
+Hi and welcome to my third and final deliverable for my portfolio analyzing app store analytics. At first when starting Deliverable 1, my focus was on microtransactions and in app purchases and their effect on analytics such as app price, total sales, and app rating. After finishing the first deliverable, the apple store dataset showed promise in a different type of analysis and the focus of the portfolio shifted to app ratings based on the content or age rating of the app. By the time Deliverable 2 came along, I introduced google play store data and made a model solely based on the google play data. In Deliverable 3, I would like to take the data from the apple app store and the google play store and combine them to make one comprehensive model and analyze both together.
+
+# Preparing the Apple Store Data to Merge with Google Play
+
+First thing I want to do is prep the data from the first deliverable and put it in the format of the second data set in order to merge them for the model building. The first thing I have to do is take the variable `cont_rating` and duplicate it as a new variable so I can change it into the categories that match the google play store data without getting rid of the original data.
+
+```{r}
+apps2 <- apps2 %>% mutate(content_cat = cont_rating)
+apps2$content_cat <- as.character(apps2$content_cat)
+apps2$content_cat[apps2$content_cat == "4+"] <- "Everyone"
+apps2$content_cat[apps2$content_cat == "9+"] <- "Everyone 10+"
+apps2$content_cat[apps2$content_cat == "12+"] <- "Teen"
+apps2$content_cat[apps2$content_cat == "17+"] <- "Mature 17+"
+```
+
+Last deliverable I had an issue with my model due to singularities so this deliverable I want to integrate more variables into the model. To do this I am going to make more changes to the apple store data and also the google play data.
+
+I am going to change the name of the variable `rating_count_tot` in apps2 to `num_ratings` for future joining.
+
+```{r}
+apps2$num_ratings <- apps2$rating_count_tot
+```
+
+Now for the google play store data.
+
+```{r}
+problem1$num_ratings <- problem1$Reviews
+```
+
+Moving onto another variable needed in the model, I am going to fix price for both data sets.
+
+```{r}
+typeof(apps2$price)
+```
+Since apps2 has price data stored as doubles, we can move forward without changing anything.
+
+Looking at the google play store data, I need to change the way the data is stored since the data type is character with dollar signs. To fix this I will use `gsub()` to replace the $ with nothing and then convert it using `as.numeric()`.
+
+```{r}
+problem1$Price <- as.numeric(gsub("\\$", "", problem1$Price))
+```
+
+```{r}
+typeof(problem1$Price)
+```
+
+Now it is successfully ready to be stored as doubles in both data frames.
+
+# Creating the Final Apple Store and Google Play Store Data Sets
+
+I am going to use `tibble()` to select the variables wanted for both apple store and google play store.
+
+```{r}
+apple_combine <- tibble(app_name = apps2$track_name,
+                        app_rating = apps2$user_rating,
+                        num_ratings = apps2$num_ratings,
+                        app_price = apps2$price,
+                        cont_rating = apps2$content_cat)
+
+google_combine <- tibble(app_name = problem1$App,
+                         app_rating = problem1$Rating,
+                         num_ratings = problem1$Reviews,
+                         app_price = problem1$Price,
+                         cont_rating = problem1$`Content Rating`)
+```
+
+# Combining Apple Store and Google Play
+
+With the final two tibbles created, it is time to join the two tables into one. A dplyr join is not needed since all 6 variables in each data frame is identical. The final data frame is stored as `apple_google` and the variables included are:
+
+`app_name`: The name of the app.
+
+`app_rating`: The rating of the app on a scale from 0-5 stars.
+
+`num_ratings`: The number of ratings the app has.
+
+`app_price`: The price of the app in dollars.
+
+`cont_rating`: The content rating of the app.
+
+```{r}
+apple_google <- bind_rows(apple_combine,
+                          google_combine)
+```
+
+After doing outside research, I found out it is impossible to rate an app 0 stars in both the apple app store and also the google play store. Knowing this information, I will remove all the values in `apple_google` in which the app rating is 0 to improve the model.
+
+```{r}
+apple_google <- apple_google %>% filter(apple_google$app_rating != "0")
+apple_google <- apple_google %>% filter(apple_google$app_rating != "NaN")
+```
+
+The last thing I need to do for `apple_google` is to make `cont_rating` a factor and then relevel it to where the age rating is in an order that makes sense for future graphs.
+
+```{r}
+table(apple_google$cont_rating)
+```
+
+
+```{r}
+apple_google$cont_rating <- as.factor(apple_google$cont_rating)
+apple_google$cont_rating <- fct_relevel(apple_google$cont_rating, levels = 
+                                          c('Everyone', 'Everyone 10+', 'Teen', 'Mature 17+', 'Adults only 18+', 'Unrated'))
+levels(apple_google$cont_rating)
+```
+
+# Performing Multiple Linear Regression for Model Building
+
+First, I need to create a partition of the data based on `app_rating` in order to split that up into the train and test data. The partition I named `sample_partition` splits the data into two groups with 70% of the data in one group and 30% in the other. I will then make the 70% into the train data to create the model and then use 30% of the data to predict values using the model.
+
+```{r}
+sample_partition <- createDataPartition(apple_google$app_rating, p=0.70, list = FALSE)
+combtrain <- apple_google[sample_selection,]
+combtest <- apple_google[-sample_selection,]
+```
+
+One of the main issues with deliverable 2 was that the model was lacking explanatory variables. In this deliverable I will integrate more variables. Now that the train and test data has been made, I will create a model named `comb_model` that will use content rating, app price, and the number of ratings to predict app rating.
+
+```{r}
+comb_model <- lm(app_rating ~ cont_rating + app_price, + num_ratings , data = combtrain)
+summary(comb_model)
+```
+
+```{r}
+apple_google %>% ggplot(aes(x=cont_rating, y = app_rating)) + geom_boxplot() +
+  stat_summary(fun.y="mean", geom="point", size=5, pch=17,color="red") + theme_bw()
+```
+
+# Final Conclusions and Summary
+
+Over this semester I have enjoyed looking into app store data for many reasons. I first assumed that all apps were made for monetary gain in which I would obviously find a correlation between sales and in app purchases, but after diving into multiple data sets, I noticed that there are much more variables to the process and changed focus. That is what Data Science is all about. The Data Science cycle is all about data preparation, research into the data, drawing conclusions from it and repeating. 
+
+When discussing the social implications and some of the drawbacks, it is important to focus on the reasons behind a review in the app store. Like all optional review systems, people only review if they are on the polar ends of the spectrum of satisfaction with the product. Like I discussed in Deliverable 2, people only review an app if they absolutely love it or absolutely hate it. This causes a skew in the reviews. No one will take their time to express that they are moderately pleased with an app and give it 3 stars. This causes the variation of data points for average app rating to be very low. Most apps in my model based on content rating had a very similar average app rating. Another problem when looking into this data could be the possible effects of the Cobra effect which is when a possible solution for a problem actually has the opposite effect and introduces a negative reaction in the population. A possible example of the cobra effect in app research is that if the results come back as a certain age group provides higher ratings for apps such as 18+ or even teens, more apps in the future could be aimed at that age group which takes away from a large population of the users in the app store, the kids under 13.
+
+When all is done, diving into app analytics while demonstrating the data science cycle was enriching and I hope to continue my research in this topic in the future.
